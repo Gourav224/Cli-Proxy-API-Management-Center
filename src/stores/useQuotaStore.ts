@@ -20,6 +20,8 @@ type QuotaUpdater<T> = T | ((prev: T) => T);
 interface QuotaStoreState {
   cacheGeneration: number;
   fileGenerations: Record<string, number>;
+  quotaRefreshing: Record<string, boolean>;
+  quotaFetchedAt: Record<string, number>;
   antigravityQuota: Record<string, AntigravityQuotaState>;
   claudeQuota: Record<string, ClaudeQuotaState>;
   codexQuota: Record<string, CodexQuotaState>;
@@ -36,6 +38,8 @@ interface QuotaStoreState {
   setMetaQuota: (updater: QuotaUpdater<Record<string, MetaQuotaState>>) => void;
   setPluginQuota: (updater: QuotaUpdater<Record<string, PluginQuotaState>>) => void;
   setXaiQuota: (updater: QuotaUpdater<Record<string, XaiQuotaState>>) => void;
+  setQuotaRefreshing: (cacheKey: string, active: boolean) => void;
+  markQuotaFetched: (cacheKey: string, atMs?: number) => void;
   clearQuotaCache: (names?: string[]) => void;
 }
 
@@ -49,6 +53,8 @@ const resolveUpdater = <T>(updater: QuotaUpdater<T>, prev: T): T => {
 export const useQuotaStore = create<QuotaStoreState>((set) => ({
   cacheGeneration: 0,
   fileGenerations: {},
+  quotaRefreshing: {},
+  quotaFetchedAt: {},
   antigravityQuota: {},
   claudeQuota: {},
   codexQuota: {},
@@ -113,6 +119,22 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
     set((state) => ({
       xaiQuota: resolveUpdater(updater, state.xaiQuota),
     })),
+  setQuotaRefreshing: (cacheKey, active) =>
+    set((state) => {
+      const current = Boolean(state.quotaRefreshing[cacheKey]);
+      if (current === active) return state;
+      const next = { ...state.quotaRefreshing };
+      if (active) next[cacheKey] = true;
+      else delete next[cacheKey];
+      return { quotaRefreshing: next };
+    }),
+  markQuotaFetched: (cacheKey, atMs = Date.now()) =>
+    set((state) => ({
+      quotaFetchedAt: {
+        ...state.quotaFetchedAt,
+        [cacheKey]: atMs,
+      },
+    })),
   clearQuotaCache: (names) =>
     set((state) => {
       if (names) {
@@ -133,6 +155,8 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
         };
         return {
           fileGenerations,
+          quotaRefreshing: omitNames(state.quotaRefreshing),
+          quotaFetchedAt: omitNames(state.quotaFetchedAt),
           antigravityQuota: omitNames(state.antigravityQuota),
           claudeQuota: omitNames(state.claudeQuota),
           codexQuota: omitNames(state.codexQuota),
@@ -146,6 +170,8 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
       return {
         cacheGeneration: state.cacheGeneration + 1,
         fileGenerations: {},
+        quotaRefreshing: {},
+        quotaFetchedAt: {},
         antigravityQuota: {},
         claudeQuota: {},
         codexQuota: {},

@@ -224,18 +224,20 @@ export function QuotaPool({
           })}
         </div>
       ) : (
-        visible.map((pool) => (
-          <PoolCard
-            key={pool.provider}
-            provider={pool.provider}
-            lanes={pool.lanes[mode]}
-            mode={mode}
-            burnWindow={burnWindow}
-            now={now}
-            resolvedTheme={resolvedTheme}
-            history={histories.get(pool.provider) ?? []}
-          />
-        ))
+        <div className={styles.cards} data-count={visible.length}>
+          {visible.map((pool) => (
+            <PoolCard
+              key={pool.provider}
+              provider={pool.provider}
+              lanes={pool.lanes[mode]}
+              mode={mode}
+              burnWindow={burnWindow}
+              now={now}
+              resolvedTheme={resolvedTheme}
+              history={histories.get(pool.provider) ?? []}
+            />
+          ))}
+        </div>
       )}
 
       <p className={styles.note}>

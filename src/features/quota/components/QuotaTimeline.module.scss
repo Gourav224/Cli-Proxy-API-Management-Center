@@ -3,7 +3,7 @@
 
 // Fixed-width lane column so every row's bars start at the same x — the whole
 // point of the chart is comparing when lanes end relative to each other.
-$lane-width: 210px;
+$lane-width: 280px;
 
 .timeline {
   display: flex;
@@ -258,7 +258,7 @@ $lane-width: 210px;
 }
 
 .window {
-  position: relative;
+  container-type: inline-size;
   z-index: 2;
   height: 22px;
   display: flex;
@@ -307,6 +307,12 @@ $lane-width: 210px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-variant-numeric: tabular-nums;
+}
+
+@container (max-width: 68px) {
+  .windowLabel {
+    display: none;
+  }
 }
 
 // A reset credit is use-it-or-lose-it, so its expiry sits above the window bar
@@ -392,5 +398,20 @@ $lane-width: 210px;
   .axis,
   .lane {
     min-width: 720px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav button,
+  .modes button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 6px 12px;
+  }
+
+  .laneName {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
   }
 }

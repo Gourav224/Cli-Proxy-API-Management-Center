@@ -1,10 +1,18 @@
-// Width reserved for the y-axis labels so every card's plot starts at the same x.
-$y-axis-width: 44px;
+$y-axis-width: 48px;
 
 .pool {
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow);
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: 16px;
+  }
 }
 
 .head {
@@ -17,21 +25,22 @@ $y-axis-width: 44px;
 
 .title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 650;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
 .subtitle {
-  margin: 2px 0 0;
-  font-size: 12px;
-  color: var(--text-quaternary);
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
 }
 
 .controls {
   display: flex;
   align-items: center;
-  gap: $spacing-sm;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -42,51 +51,107 @@ $y-axis-width: 44px;
   padding: 3px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  border-radius: 999px;
+  border-radius: 9px;
 
   button {
-    padding: 4px 12px;
+    min-height: 28px;
+    padding: 4px 11px;
     font: inherit;
-    font-size: 12.5px;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--text-secondary);
     background: transparent;
     border: 1px solid transparent;
-    border-radius: 999px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all $transition-fast;
+    font-variant-numeric: tabular-nums;
+    transition:
+      background-color $transition-fast,
+      color $transition-fast,
+      border-color $transition-fast;
 
     &:hover {
       color: var(--text-primary);
     }
 
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 1px;
+    }
+
     &[aria-pressed='true'] {
-      background: var(--floating-surface, var(--bg-primary));
-      border-color: var(--border-hover);
+      background: var(--bg-primary);
+      border-color: var(--border-primary);
       color: var(--text-primary);
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 6px 12px;
     }
   }
 }
 
 .empty {
-  min-height: 96px;
+  min-height: 108px;
   display: grid;
   place-items: center;
   padding: $spacing-lg;
-  border: 1px solid var(--border-color);
-  border-radius: $radius-lg;
-  color: var(--text-quaternary);
-  font-size: 12px;
+  border: 1px dashed var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 13px;
   text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 12px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
-  padding: $spacing-md $spacing-lg;
+  gap: 12px;
+  padding: 14px 16px;
   border: 1px solid var(--border-color);
-  border-radius: $radius-lg;
-  background: var(--bg-primary);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  min-width: 0;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: 14px;
+  }
+}
+
+.cards:not([data-count='1']) {
+  .cardHead {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .totalValue {
+    font-size: 26px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+    width: 100%;
+  }
+
+  .yAxis,
+  .canvas {
+    height: 112px;
+  }
+
+  .canvas {
+    margin-bottom: 20px;
+  }
 }
 
 .cardHead {
@@ -100,84 +165,110 @@ $y-axis-width: 44px;
 .provider {
   display: flex;
   align-items: baseline;
-  gap: $spacing-sm;
+  gap: 8px;
 }
 
 .providerName {
   font-size: 14px;
-  font-weight: 650;
-  color: var(--pool-color);
+  font-weight: 700;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--pool-color);
+  }
 }
 
 .accounts {
   font-size: 12px;
-  color: var(--text-quaternary);
+  font-weight: 500;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
 }
 
 .total {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 8px;
   margin-top: 4px;
 }
 
 .totalValue {
-  font-size: 34px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
   line-height: 1;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 
 .totalOf {
-  font-size: 12px;
-  color: var(--text-quaternary);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
 }
 
 .stats {
-  display: flex;
-  gap: $spacing-lg;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(96px, auto));
+  gap: 12px 20px;
   margin: 0;
-  flex-wrap: wrap;
+
+  @media (max-width: 720px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
 }
 
 .stat {
-  min-width: 96px;
+  min-width: 0;
 
   dt {
     font-size: 11px;
-    color: var(--text-quaternary);
+    font-weight: 600;
+    color: var(--text-tertiary);
   }
 
   dd {
-    margin: 2px 0 0;
+    margin: 3px 0 0;
     font-size: 12.5px;
-    font-weight: 600;
+    font-weight: 650;
     color: var(--text-primary);
     font-variant-numeric: tabular-nums;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
 .plot {
   display: grid;
   grid-template-columns: $y-axis-width 1fr;
-  gap: 6px;
+  gap: 8px;
 }
 
 .yAxis {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 200px;
-  font-size: 10.5px;
+  height: 148px;
+  font-family: $font-mono;
+  font-size: 11px;
   text-align: right;
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
   font-variant-numeric: tabular-nums;
 }
 
 .canvas {
   position: relative;
-  height: 200px;
+  height: 148px;
   margin-bottom: 22px;
 }
 
@@ -196,26 +287,27 @@ $y-axis-width: 44px;
 
 .area {
   fill: var(--pool-color);
-  opacity: 0.12;
+  opacity: 0.14;
 }
 
 .recorded,
 .projected {
   fill: none;
   stroke: var(--pool-color);
-  stroke-width: 1.75;
+  stroke-width: 2;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 
 .projected {
   stroke-dasharray: 5 4;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .nowLine {
-  stroke: var(--text-quaternary);
+  stroke: var(--text-tertiary);
   stroke-width: 1;
+  stroke-dasharray: 2 2;
   vector-effect: non-scaling-stroke;
 }
 
@@ -223,20 +315,25 @@ $y-axis-width: 44px;
 .resetLabel {
   position: absolute;
   transform: translate(-50%, -100%);
+  font-family: $font-mono;
   font-size: 10.5px;
+  font-weight: 600;
   white-space: nowrap;
   pointer-events: auto;
   font-variant-numeric: tabular-nums;
 }
 
 .nowLabel {
-  top: -2px;
-  color: var(--text-quaternary);
+  top: -3px;
+  color: var(--text-secondary);
 }
 
 .resetLabel {
   margin-top: -4px;
-  color: var(--text-secondary);
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+  color: var(--text-primary);
 }
 
 .xAxis {
@@ -250,17 +347,20 @@ $y-axis-width: 44px;
     position: absolute;
     top: 6px;
     transform: translateX(-50%);
+    font-family: $font-mono;
     font-size: 10.5px;
     white-space: nowrap;
-    color: var(--text-quaternary);
+    color: var(--text-tertiary);
   }
 }
 
 .legend {
   display: flex;
+  align-items: center;
   gap: $spacing-md;
-  font-size: 11.5px;
-  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .legendItem {
@@ -283,5 +383,5 @@ $y-axis-width: 44px;
 .note {
   margin: 0;
   font-size: 11.5px;
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
 }

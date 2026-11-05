@@ -1,21 +1,15 @@
-/**
- * 单卡额度操作：刷新 + Codex 重置积分。
- * 流程 1:1 移植旧 QuotaSection（confirm modal、resetting 再入守卫、
- * generation-guarded commit、成功/失败通知），仅把 config 换成 adapter。
- */
-
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   captureQuotaCacheGeneration,
   commitIfQuotaCacheCurrent,
   useNotificationStore,
+  useQuotaStore,
 } from '@/stores';
 import type { AuthFileItem } from '@/types';
-import { getStatusFromError } from '@/utils/quota';
 import { getQuotaCacheKey } from '@/utils/quota/identity';
-import { enrichQuotaInBackground } from '../quotaEnrichment';
 import { getQuotaMap, getQuotaSetter, type QuotaAdapter, type QuotaCardState } from '../providers';
+import { runQueuedQuotaFetch } from './quotaFetchRunner';
 
 const getQuotaState = (adapter: QuotaAdapter, file: AuthFileItem): QuotaCardState | undefined =>
   getQuotaMap(adapter)[getQuotaCacheKey(file)];
@@ -31,39 +25,28 @@ export function useQuotaActions(disableControls: boolean) {
       if (disableControls || file.disabled) return;
       const cacheKey = getQuotaCacheKey(file);
       if (resettingQuotaName === cacheKey) return;
+      if (useQuotaStore.getState().quotaRefreshing[cacheKey]) return;
       if (getQuotaState(adapter, file)?.status === 'loading') return;
-      const cacheGeneration = captureQuotaCacheGeneration(file.name);
-      const setQuota = getQuotaSetter(adapter);
 
-      setQuota((prev) => ({
-        ...prev,
-        [cacheKey]: adapter.buildLoadingState(),
-      }));
+      const outcome = await runQueuedQuotaFetch({
+        file,
+        adapter,
+        t,
+        priority: 'front',
+        preserveSuccessOnError: false,
+      });
 
-      try {
-        const data = await adapter.fetchQuota(file, t);
-        commitIfQuotaCacheCurrent(cacheGeneration, () => {
-          const successState = adapter.buildSuccessState(data);
-          setQuota((prev) => ({
-            ...prev,
-            [cacheKey]: successState,
-          }));
-          void enrichQuotaInBackground(adapter, file, data, successState, t);
-          showNotification(t('auth_files.quota_refresh_success', { name: file.name }), 'success');
-        });
-      } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : t('common.unknown_error');
-        const status = getStatusFromError(err);
-        commitIfQuotaCacheCurrent(cacheGeneration, () => {
-          setQuota((prev) => ({
-            ...prev,
-            [cacheKey]: adapter.buildErrorState(message, status),
-          }));
-          showNotification(
-            t('auth_files.quota_refresh_failed', { name: file.name, message }),
-            'error'
-          );
-        });
+      if (!outcome.committed) return;
+      if (outcome.ok) {
+        showNotification(t('auth_files.quota_refresh_success', { name: file.name }), 'success');
+      } else {
+        showNotification(
+          t('auth_files.quota_refresh_failed', {
+            name: file.name,
+            message: outcome.errorMessage || t('common.unknown_error'),
+          }),
+          'error'
+        );
       }
     },
     [disableControls, resettingQuotaName, showNotification, t]
@@ -76,6 +59,7 @@ export function useQuotaActions(disableControls: boolean) {
       if (disableControls || file.disabled) return;
       const cacheKey = getQuotaCacheKey(file);
       if (getQuotaState(adapter, file)?.status === 'loading') return;
+      if (useQuotaStore.getState().quotaRefreshing[cacheKey]) return;
       if (resettingQuotaName === cacheKey) return;
 
       showConfirmation({
@@ -94,6 +78,7 @@ export function useQuotaActions(disableControls: boolean) {
                 ...prev,
                 [cacheKey]: adapter.buildSuccessState(data),
               }));
+              useQuotaStore.getState().markQuotaFetched(cacheKey, Date.now());
               showNotification(t('codex_quota.reset_success', { name: file.name }), 'success');
             });
           } catch (err: unknown) {
