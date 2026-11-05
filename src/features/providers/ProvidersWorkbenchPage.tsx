@@ -125,12 +125,15 @@ export function ProvidersWorkbenchPage({ fixedBrand }: ProvidersWorkbenchPagePro
     await Promise.allSettled([workbench.refetch(), refreshRecentRequests().catch(() => undefined)]);
   }, [refreshRecentRequests, workbench]);
 
-  useHeaderRefresh(handleRefresh, isCurrentLayer);
+  useHeaderRefresh(handleRefresh, {
+    enabled: isCurrentLayer && connected,
+    autoRefresh: !sheetState.open,
+  });
 
   const disableMutations =
     connectionStatus !== 'connected' ||
     workbench.mutating ||
-    workbench.isFetching ||
+    workbench.isPending ||
     workbench.isError;
 
   const persistUiState = useCallback(

@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import { pluginsApi } from '@/services/api';
 import { useAuthStore } from '@/stores';
 import { getErrorMessage, isRecord } from '@/utils/helpers';
@@ -38,6 +39,7 @@ export function PluginResourcePage() {
   const [data, setData] = useState<PluginListResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const hasLoadedRef = useRef(false);
 
   const connected = connectionStatus === 'connected';
   const pluginID = useMemo(() => safeDecodeURIComponent(params.pluginId), [params.pluginId]);
@@ -50,11 +52,15 @@ export function PluginResourcePage() {
       return;
     }
 
-    setLoading(true);
+    if (!hasLoadedRef.current) {
+      setLoading(true);
+    }
     setError('');
     try {
       const plugins = await pluginsApi.list();
+      hasLoadedRef.current = true;
       setData(plugins);
+      markLiveDataUpdated();
     } catch (err: unknown) {
       setError(
         hasStatus(err, 404)

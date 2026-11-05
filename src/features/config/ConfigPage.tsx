@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { usePageTransitionLayer } from '@/components/common/PageTransitionLayer';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useRevealGroup } from '@/hooks/motion';
+import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
 import { useVisualConfig } from '@/hooks/useVisualConfig';
 import { useAuthStore, useNotificationStore, useThemeStore } from '@/stores';
@@ -123,6 +125,23 @@ export function ConfigPage() {
       cancelText: t('common.cancel'),
     }),
     [t]
+  );
+
+  useEffect(() => {
+    if (!doc.loading && !doc.error && doc.content) {
+      markLiveDataUpdated();
+    }
+  }, [doc.loading, doc.error, doc.content]);
+
+  useHeaderRefresh(
+    async () => {
+      await doc.handleReload();
+      markLiveDataUpdated();
+    },
+    {
+      enabled: isCurrentLayer && !disableControls && !doc.saving,
+      autoRefresh: false,
+    }
   );
 
   useUnsavedChangesGuard({

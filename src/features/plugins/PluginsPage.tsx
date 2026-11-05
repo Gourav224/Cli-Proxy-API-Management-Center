@@ -17,6 +17,7 @@ import {
   IconTrash2,
 } from '@/components/ui/icons';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import { pluginsApi, pluginStoreApi } from '@/services/api';
 import { useAuthStore, useConfigStore, useNotificationStore } from '@/stores';
 import { getErrorMessage, isRecord } from '@/utils/helpers';
@@ -86,6 +87,7 @@ export function PluginsPage() {
   const [deletingID, setDeletingID] = useState('');
   const [openingConfigID, setOpeningConfigID] = useState('');
   const configRequestSeq = useRef(0);
+  const hasLoadedRef = useRef(false);
 
   const connected = connectionStatus === 'connected';
 
@@ -96,11 +98,15 @@ export function PluginsPage() {
       return;
     }
 
-    setLoading(true);
+    if (!hasLoadedRef.current) {
+      setLoading(true);
+    }
     setError('');
     try {
       const plugins = await pluginsApi.list();
+      hasLoadedRef.current = true;
       setData(plugins);
+      markLiveDataUpdated();
     } catch (err: unknown) {
       setError(
         hasStatus(err, 404)
@@ -128,7 +134,10 @@ export function PluginsPage() {
     []
   );
 
-  useHeaderRefresh(loadPlugins, connected);
+  useHeaderRefresh(loadPlugins, {
+    enabled: connected,
+    autoRefresh: !editingPlugin && !mutatingID && !deletingID,
+  });
 
   useEffect(() => {
     void loadPlugins();

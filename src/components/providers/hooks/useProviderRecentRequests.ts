@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useInterval } from '@/hooks/useInterval';
 import { apiKeyUsageApi } from '@/services/api';
 import { useAuthStore } from '@/stores';
 import {
@@ -169,13 +168,6 @@ export function useProviderRecentRequests(options: UseProviderRecentRequestsOpti
     }
     void loadRecentRequests().catch(() => {});
   }, [enabled, loadRecentRequests, setUsageForCurrentScope]);
-
-  useInterval(
-    () => {
-      void refreshRecentRequests().catch(() => {});
-    },
-    enabled ? PROVIDER_RECENT_REQUESTS_STALE_TIME_MS : null
-  );
 
   const usageByProvider =
     usageState.cache === cache ? usageState.value : cache.cachedUsageByProvider;

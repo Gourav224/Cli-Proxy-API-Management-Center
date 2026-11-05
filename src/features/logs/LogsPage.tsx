@@ -24,6 +24,7 @@ import {
   IconX,
 } from '@/components/ui/icons';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useAuthStore, useConfigStore, useNotificationStore } from '@/stores';
 import { logsApi, responseDataToText, type ErrorLogFile } from '@/services/api/logs';
@@ -147,7 +148,26 @@ export function LogsPage() {
     }
   };
 
-  useHeaderRefresh(() => (activeTab === 'errors' ? loadErrorLogs() : loadLogs(false)));
+  useEffect(() => {
+    if (lastUpdated) {
+      markLiveDataUpdated(lastUpdated);
+    }
+  }, [lastUpdated]);
+
+  useHeaderRefresh(
+    async () => {
+      if (activeTab === 'errors') {
+        await loadErrorLogs();
+      } else {
+        await loadLogs(false);
+      }
+      markLiveDataUpdated();
+    },
+    {
+      enabled: !disableControls,
+      autoRefresh: activeTab === 'errors',
+    }
+  );
 
   const downloadErrorLog = async (name: string) => {
     const session = requests.session.capture();

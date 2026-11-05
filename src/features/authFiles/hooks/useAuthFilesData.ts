@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiClient, authFilesApi } from '@/services/api';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import type { AuthFileRefreshResult } from '@/services/api/authFiles';
 import { getAuthFileRefreshKey } from '@/features/authFiles/manualRefresh';
 import { notifyAuthFilesChanged } from '@/features/authFiles/authFilesEvents';
@@ -226,6 +227,7 @@ export function useAuthFilesData(options?: UseAuthFilesDataOptions): UseAuthFile
         if (!isCurrentRequest()) return; // 已被更新的请求/连接/变更取代
         setFiles(data?.files || []);
         setError('');
+        markLiveDataUpdated();
       } catch (err: unknown) {
         if (!isCurrentRequest()) return;
         const errorMessage = err instanceof Error ? err.message : t('notification.refresh_failed');

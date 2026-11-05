@@ -18,6 +18,7 @@ import {
   IconShield,
 } from '@/components/ui/icons';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import { pluginStoreApi } from '@/services/api';
 import { useAuthStore, useConfigStore, useNotificationStore } from '@/stores';
 import { getErrorMessage, isRecord } from '@/utils/helpers';
@@ -488,6 +489,7 @@ export function PluginStorePage() {
   const [installOptionsIsUpdate, setInstallOptionsIsUpdate] = useState(false);
   const [installVersion, setInstallVersion] = useState('');
 
+  const hasLoadedRef = useRef(false);
   const connected = connectionStatus === 'connected';
 
   const loadStore = useCallback(async () => {
@@ -497,11 +499,15 @@ export function PluginStorePage() {
       return;
     }
 
-    setLoading(true);
+    if (!hasLoadedRef.current) {
+      setLoading(true);
+    }
     setError(null);
     try {
       const store = await pluginStoreApi.list();
+      hasLoadedRef.current = true;
       setData(store);
+      markLiveDataUpdated();
     } catch (err: unknown) {
       const status = getErrorStatus(err);
       if (status === 404) {
@@ -525,7 +531,10 @@ export function PluginStorePage() {
     }
   }, [connected, t]);
 
-  useHeaderRefresh(loadStore, connected);
+  useHeaderRefresh(loadStore, {
+    enabled: connected,
+    autoRefresh: !gateOpen && !installOptionsEntry && !installingKey,
+  });
 
   useEffect(() => {
     void loadStore();

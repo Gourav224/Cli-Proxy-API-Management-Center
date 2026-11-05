@@ -12,7 +12,8 @@ import { AutocompleteInput } from '@/components/ui/AutocompleteInput';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { useHeaderRefresh, type HeaderRefreshContext } from '@/hooks/useHeaderRefresh';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import { useRevealGroup } from '@/hooks/motion';
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
 import {
@@ -93,6 +94,7 @@ export function RoutingPage() {
   const [weightEdit, setWeightEdit] = useState<{ key: string; session: number } | null>(null);
   const [weightOpen, setWeightOpen] = useState(false);
   const requestRef = useRef(0);
+  const hasBoardRef = useRef(false);
   const catalogRef = useRef<RoutingModelCatalog>(EMPTY_CATALOG);
 
   const connected = connectionStatus === 'connected';
@@ -132,15 +134,19 @@ export function RoutingPage() {
       setLoading(false);
       return;
     }
-    setLoading(true);
+    if (!hasBoardRef.current) {
+      setLoading(true);
+    }
     setError(null);
     try {
       const [config, files] = await Promise.all([fetchConfig(true), routingApi.listCredentials()]);
       if (!isCurrent()) return;
       const next = buildRoutingBoard(config.raw ?? {}, files);
+      hasBoardRef.current = true;
       setBoard(next);
       setDraft(draftFromBoard(next));
       loadModels(next, requestId);
+      markLiveDataUpdated();
     } catch (err) {
       if (!isCurrent()) return;
       setError(getErrorMessage(err));
@@ -169,20 +175,27 @@ export function RoutingPage() {
   );
   const dirty = Boolean(plan && plan.changes.length > 0);
 
-  // The global header refresh reloads the board; with a draft it asks first.
-  const refresh = useCallback(() => {
-    if (!dirty) return load();
-    showConfirmation({
-      title: t('routing.unsaved_title'),
-      message: t('routing.refresh_discards'),
-      confirmText: t('routing.refresh'),
-      cancelText: t('routing.unsaved_cancel'),
-      variant: 'danger',
-      onConfirm: () => load(),
-    });
-  }, [dirty, load, showConfirmation, t]);
+  // The global header refresh reloads the board; with a draft only manual refresh asks first.
+  const refresh = useCallback(
+    (ctx?: HeaderRefreshContext) => {
+      if (!dirty) return load();
+      if (ctx?.source === 'auto') return;
+      showConfirmation({
+        title: t('routing.unsaved_title'),
+        message: t('routing.refresh_discards'),
+        confirmText: t('routing.refresh'),
+        cancelText: t('routing.unsaved_cancel'),
+        variant: 'danger',
+        onConfirm: () => load(),
+      });
+    },
+    [dirty, load, showConfirmation, t]
+  );
 
-  useHeaderRefresh(refresh);
+  useHeaderRefresh(refresh, {
+    enabled: isCurrentLayer && connected,
+    autoRefresh: !dirty && !reviewOpen && !weightOpen && !saving,
+  });
 
   const { allowNextNavigation } = useUnsavedChangesGuard({
     shouldBlock: dirty,

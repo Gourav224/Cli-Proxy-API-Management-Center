@@ -14,6 +14,8 @@ import {
 } from '@/stores';
 import { configApi, versionApi } from '@/services/api';
 import { useApiKeysForModels } from '@/hooks/useApiKeysForModels';
+import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import { formatDateTimeValue } from '@/utils/format';
 import { classifyModels } from '@/utils/models';
 import { STORAGE_KEY_AUTH } from '@/utils/constants';
@@ -131,7 +133,13 @@ export function SystemPage() {
 
   const resolveApiKeysForModels = useApiKeysForModels();
 
-  const fetchModels = async ({ forceRefresh = false }: { forceRefresh?: boolean } = {}) => {
+  const fetchModels = async ({
+    forceRefresh = false,
+    silent = false,
+  }: {
+    forceRefresh?: boolean;
+    silent?: boolean;
+  } = {}) => {
     if (auth.connectionStatus !== 'connected') {
       setModelStatus({
         type: 'warning',
@@ -145,7 +153,9 @@ export function SystemPage() {
       return;
     }
 
-    setModelStatus({ type: 'muted', message: t('system_info.models_loading') });
+    if (!silent || models.length === 0) {
+      setModelStatus({ type: 'muted', message: t('system_info.models_loading') });
+    }
     try {
       const apiKeys = await resolveApiKeysForModels({ force: forceRefresh });
       const primaryKey = apiKeys[0];
@@ -157,6 +167,7 @@ export function SystemPage() {
           ? t('system_info.models_count', { count: list.length })
           : t('system_info.models_empty'),
       });
+      markLiveDataUpdated();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : typeof err === 'string' ? err : '';
       const suffix = message ? `: ${message}` : '';
@@ -292,6 +303,20 @@ export function SystemPage() {
       }
     };
   }, []);
+
+  const handleSystemRefresh = useCallback(async () => {
+    await Promise.allSettled([
+      fetchConfig(true),
+      fetchModels({ forceRefresh: true, silent: true }),
+    ]);
+    markLiveDataUpdated();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.connectionStatus, auth.apiBase, fetchConfig]);
+
+  useHeaderRefresh(handleSystemRefresh, {
+    enabled: auth.connectionStatus === 'connected',
+    autoRefresh: !requestLogModalOpen,
+  });
 
   useEffect(() => {
     fetchModels();

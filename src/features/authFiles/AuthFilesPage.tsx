@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useInterval } from '@/hooks/useInterval';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { useRevealOnScroll } from '@/hooks/motion';
 import { usePageTransitionLayer } from '@/components/common/PageTransitionLayer';
@@ -369,7 +368,10 @@ export function AuthFilesPage() {
     await Promise.all([loadFiles({ background: true }), loadExcluded(), loadModelAlias()]);
   }, [loadFiles, loadExcluded, loadModelAlias]);
 
-  useHeaderRefresh(handleHeaderRefresh);
+  useHeaderRefresh(handleHeaderRefresh, {
+    enabled: isCurrentLayer && connectionStatus === 'connected',
+    autoRefresh: true,
+  });
 
   useEffect(() => {
     if (!isCurrentLayer) return;
@@ -378,13 +380,6 @@ export function AuthFilesPage() {
     loadExcluded();
     loadModelAlias();
   }, [isCurrentLayer, loadFiles, loadExcluded, loadModelAlias]);
-
-  useInterval(
-    () => {
-      void loadFiles({ background: true }).catch(() => {});
-    },
-    isCurrentLayer ? 240_000 : null
-  );
 
   /* ---------- 过滤 / 排序 / 分页 memos ---------- */
 

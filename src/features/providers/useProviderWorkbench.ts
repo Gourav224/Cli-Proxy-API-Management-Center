@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { providersApi } from '@/services/api';
 import { getErrorMessage } from '@/utils/helpers';
 import { useAuthStore, useConfigStore } from '@/stores';
+import { markLiveDataUpdated } from '@/stores/useLiveRefreshStore';
 import {
   stripDisableAllModelsRule,
   withDisableAllModelsRule,
@@ -501,6 +502,7 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
         updateConfigValue('openai-compatibility', openaiResult.value || []);
       }
       setFetchedAt(new Date().toISOString());
+      markLiveDataUpdated();
     } catch (err) {
       setErrorMessage(getErrorMessage(err) || 'Failed to load providers');
     } finally {
