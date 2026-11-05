@@ -94,7 +94,20 @@
   },
   "header": {
     "refresh_all": "Làm mới tất cả",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "live_label": "Tự động làm mới",
+    "live_off": "Tắt",
+    "live_5s": "5s",
+    "live_10s": "10s",
+    "live_30s": "30s",
+    "live_1m": "1p",
+    "live_stream": "Trực tiếp",
+    "live_paused": "Tạm dừng",
+    "live_backoff": "Đang thử lại",
+    "updated_just_now": "Vừa cập nhật",
+    "updated_seconds_ago": "Cập nhật {{count}} giây trước",
+    "updated_minutes_ago": "Cập nhật {{count}} phút trước",
+    "refresh_now": "Làm mới ngay"
   },
   "connection": {
     "status": "Trạng thái kết nối:"
@@ -206,7 +219,17 @@
     "cta_system_desc": "Chi tiết phiên bản và thông tin trung tâm quản lý.",
     "window_m": "{{minutes}}p",
     "window_h": "{{hours}}g",
-    "window_hm": "{{hours}}g {{minutes}}p"
+    "window_hm": "{{hours}}g {{minutes}}p",
+    "eyebrow": "Bảng Điều Khiển Vận Hành Cổng",
+    "quota_pool_title": "Sức khỏe hạn mức tài khoản",
+    "quota_pool_subtitle": "Dung lượng trực tiếp trên các nhà cung cấp hỗ trợ hạn mức",
+    "quota_healthy": "Ổn định",
+    "quota_low": "Thấp (<20%)",
+    "quota_exhausted": "Bị giới hạn",
+    "quota_sampling": "Đang lấy mẫu…",
+    "quota_next_reset": "Đặt lại kế tiếp",
+    "quota_open_link": "Mở bảng hạn mức",
+    "idle_traffic_note": "Chưa có yêu cầu trong khung thời gian hiện tại — proxy đang trực tuyến và sẵn sàng."
   },
   "basic_settings": {
     "debug_enable": "Bật chế độ Debug",
@@ -1607,7 +1630,16 @@
     "search_placeholder": "Tìm theo tên file hoặc email",
     "search_empty_title": "Không có tài khoản phù hợp",
     "search_empty_desc": "Hãy thử tên file hoặc email khác, hoặc xóa tìm kiếm.",
-    "search_clear": "Xóa tìm kiếm"
+    "search_clear": "Xóa tìm kiếm",
+    "loading_auto": "Đang tải hạn mức…",
+    "auto_cadence_hint": "Tự đồng bộ mỗi ≥60 giây (tối đa 3 luồng)",
+    "hero_eyebrow": "Tổng Hạn Mức & Dự Báo Tiêu Thụ",
+    "stat_active_accounts": "Tài khoản hoạt động",
+    "stat_loaded": "Đã lấy mẫu",
+    "stat_attention": "Giới hạn / thấp",
+    "stat_cadence": "Đồng bộ hạn mức",
+    "cadence_active": "Mỗi 60 giây",
+    "cadence_paused": "Thủ công"
   },
   "routing": {
     "title": "Định tuyến",

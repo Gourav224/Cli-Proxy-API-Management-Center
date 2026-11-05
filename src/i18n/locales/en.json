@@ -94,7 +94,20 @@
   },
   "header": {
     "refresh_all": "Refresh All",
-    "logout": "Logout"
+    "logout": "Logout",
+    "live_label": "Auto-refresh",
+    "live_off": "Off",
+    "live_5s": "5s",
+    "live_10s": "10s",
+    "live_30s": "30s",
+    "live_1m": "1m",
+    "live_stream": "Streaming",
+    "live_paused": "Paused",
+    "live_backoff": "Retrying",
+    "updated_just_now": "Updated just now",
+    "updated_seconds_ago": "Updated {{count}}s ago",
+    "updated_minutes_ago": "Updated {{count}}m ago",
+    "refresh_now": "Refresh now"
   },
   "connection": {
     "status": "Connection Status:"
@@ -206,7 +219,17 @@
     "cta_system_desc": "Version details and management center info.",
     "window_m": "{{minutes}}m",
     "window_h": "{{hours}}h",
-    "window_hm": "{{hours}}h {{minutes}}m"
+    "window_hm": "{{hours}}h {{minutes}}m",
+    "eyebrow": "Gateway Operations Console",
+    "quota_pool_title": "Credential quota health",
+    "quota_pool_subtitle": "Live account capacity across quota-tracked providers",
+    "quota_healthy": "Healthy",
+    "quota_low": "Low (<20%)",
+    "quota_exhausted": "Rate-limited",
+    "quota_sampling": "Sampling…",
+    "quota_next_reset": "Next reset",
+    "quota_open_link": "Open quota console",
+    "idle_traffic_note": "No requests recorded in the current telemetry window — proxy is online and ready."
   },
   "basic_settings": {
     "debug_enable": "Enable Debug Mode",
@@ -1651,7 +1674,16 @@
     "weekday_wed": "Wed",
     "weekday_thu": "Thu",
     "weekday_fri": "Fri",
-    "weekday_sat": "Sat"
+    "weekday_sat": "Sat",
+    "loading_auto": "Fetching quota…",
+    "auto_cadence_hint": "Auto-syncs every ≥60s (max 3 concurrent)",
+    "hero_eyebrow": "Pooled Capacity & Burn Projection",
+    "stat_active_accounts": "Active accounts",
+    "stat_loaded": "Sampled",
+    "stat_attention": "Rate-limited / low",
+    "stat_cadence": "Quota sync",
+    "cadence_active": "Every 60s",
+    "cadence_paused": "Manual only"
   },
   "routing": {
     "title": "Routing",

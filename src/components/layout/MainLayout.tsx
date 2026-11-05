@@ -50,6 +50,14 @@ import {
 } from '@/features/plugins/pluginResources';
 import { APIKEY_FUN_DISPLAY_NAME, hasApiKeyFunConfig } from '@/features/providers/sponsor';
 import { triggerHeaderRefresh } from '@/hooks/useHeaderRefresh';
+import { LiveRefreshControl } from '@/components/layout/LiveRefreshControl';
+import {
+  attachLiveRefreshVisibilityListener,
+  liveRefreshScheduler,
+  registerShellRefreshRunner,
+  resetLiveRefreshSession,
+  triggerLiveRefresh,
+} from '@/stores/useLiveRefreshStore';
 import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
 import { isSupportedLanguage } from '@/utils/language';
 import { getSidebarShortcutLabel, isSidebarToggleShortcut } from '@/utils/sidebarShortcut';
@@ -318,6 +326,7 @@ export function MainLayout() {
   const connectionStatus = useAuthStore((state) => state.connectionStatus);
   const apiBase = useAuthStore((state) => state.apiBase);
   const supportsPlugin = useAuthStore((state) => state.supportsPlugin);
+  const serverVersion = useAuthStore((state) => state.serverVersion);
 
   const fetchConfig = useConfigStore((state) => state.fetchConfig);
   const clearCache = useConfigStore((state) => state.clearCache);
@@ -748,26 +757,51 @@ export function MainLayout() {
     return 'vertical';
   }, []);
 
+  useEffect(() => {
+    return attachLiveRefreshVisibilityListener();
+  }, []);
+
+  useEffect(() => {
+    const isConnected = connectionStatus === 'connected';
+    liveRefreshScheduler.setConnected(isConnected);
+    if (!isConnected) {
+      resetLiveRefreshSession();
+    }
+  }, [connectionStatus]);
+
+  useEffect(() => {
+    registerShellRefreshRunner(async (ctx) => {
+      if (ctx.source === 'manual') {
+        clearCache();
+      }
+      const tasks: Array<Promise<unknown>> = [
+        loadAuthFilesCount(),
+        triggerHeaderRefresh(ctx),
+      ];
+      if (ctx.source === 'manual') {
+        tasks.push(fetchConfig(true), loadPluginResources());
+      }
+      const results = await Promise.allSettled(tasks);
+      const rejected = results.find((result) => result.status === 'rejected');
+      if (rejected && rejected.status === 'rejected') {
+        throw rejected.reason;
+      }
+    });
+    return () => registerShellRefreshRunner(null);
+  }, [clearCache, fetchConfig, loadAuthFilesCount, loadPluginResources]);
+
   const handleRefreshAll = async () => {
-    clearCache();
-    const results = await Promise.allSettled([
-      fetchConfig(true),
-      loadPluginResources(),
-      loadAuthFilesCount(),
-      triggerHeaderRefresh(),
-    ]);
-    const rejected = results.find((result) => result.status === 'rejected');
-    if (rejected && rejected.status === 'rejected') {
-      const reason = rejected.reason;
+    try {
+      await triggerLiveRefresh('manual');
+      showNotification(t('notification.data_refreshed'), 'success');
+    } catch (err: unknown) {
       const message =
-        typeof reason === 'string' ? reason : reason instanceof Error ? reason.message : '';
+        typeof err === 'string' ? err : err instanceof Error ? err.message : '';
       showNotification(
         `${t('notification.refresh_failed')}${message ? `: ${message}` : ''}`,
         'error'
       );
-      return;
     }
-    showNotification(t('notification.data_refreshed'), 'success');
   };
 
   const togglePluginResourceDrawer = useCallback((drawerID: string) => {
@@ -1012,28 +1046,59 @@ export function MainLayout() {
           {sidebarCollapsed ? headerIcons.chevronRight : headerIcons.chevronLeft}
         </button>
 
-        <div className="mobile-sidebar-actions">
-          <Button
-            className="mobile-menu-btn"
-            variant="ghost"
-            size="sm"
-            onClick={() => setSidebarOpen((prev) => !prev)}
-            title={mobileSidebarToggleLabel}
-            aria-label={mobileSidebarToggleLabel}
-          >
-            {sidebarOpen ? headerIcons.close : headerIcons.menu}
-          </Button>
-        </div>
+        <div className="header-bar-inner">
+          <div className="header-left-cluster">
+            <Button
+              className="mobile-menu-btn"
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarOpen((prev) => !prev)}
+              title={mobileSidebarToggleLabel}
+              aria-label={mobileSidebarToggleLabel}
+            >
+              {sidebarOpen ? headerIcons.close : headerIcons.menu}
+            </Button>
 
-        <div className="header-actions floating-actions">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleRefreshAll}
-            title={t('header.refresh_all')}
-          >
-            {headerIcons.refresh}
-          </Button>
+            <div className="header-connection-pill">
+              <span
+                className={`header-connection-dot ${
+                  connectionStatus === 'connected'
+                    ? 'is-connected'
+                    : connectionStatus === 'connecting'
+                      ? 'is-connecting'
+                      : 'is-offline'
+                }`}
+                aria-hidden="true"
+              />
+              <span className="header-connection-status">
+                {t(
+                  connectionStatus === 'connected'
+                    ? 'common.connected'
+                    : connectionStatus === 'connecting'
+                      ? 'common.connecting'
+                      : 'common.disconnected'
+                )}
+              </span>
+              {serverVersion ? (
+                <span className="header-connection-meta">
+                  v{serverVersion.trim().replace(/^[vV]+/, '')}
+                </span>
+              ) : null}
+              {apiBase ? (
+                <span className="header-connection-host" title={apiBase}>
+                  {apiBase.replace(/^https?:\/\//, '')}
+                </span>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="header-actions floating-actions">
+            <LiveRefreshControl
+              disabled={connectionStatus !== 'connected'}
+              isLogsRoute={isLogsPage}
+              onManualRefresh={() => void handleRefreshAll()}
+            />
+            <span className="header-divider" aria-hidden="true" />
           <div className={`language-menu ${languageMenuOpen ? 'open' : ''}`} ref={languageMenuRef}>
             <Button
               variant="ghost"
@@ -1141,9 +1206,16 @@ export function MainLayout() {
               </div>
             )}
           </div>
-          <Button variant="ghost" size="sm" onClick={logout} title={t('header.logout')}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={logout}
+            title={t('header.logout')}
+            aria-label={t('header.logout')}
+          >
             {headerIcons.logout}
           </Button>
+          </div>
         </div>
       </header>
 

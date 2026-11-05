@@ -94,7 +94,20 @@
   },
   "header": {
     "refresh_all": "全部重新整理",
-    "logout": "登出"
+    "logout": "登出",
+    "live_label": "自動重新整理",
+    "live_off": "關閉",
+    "live_5s": "5秒",
+    "live_10s": "10秒",
+    "live_30s": "30秒",
+    "live_1m": "1分",
+    "live_stream": "即時串流",
+    "live_paused": "已暫停",
+    "live_backoff": "退避重試",
+    "updated_just_now": "剛剛更新",
+    "updated_seconds_ago": "{{count}}秒前更新",
+    "updated_minutes_ago": "{{count}}分鐘前更新",
+    "refresh_now": "立即重新整理"
   },
   "connection": {
     "status": "連線狀態:"
@@ -206,7 +219,17 @@
     "cta_system_desc": "版本詳情與管理中心資訊。",
     "window_m": "{{minutes}} 分鐘",
     "window_h": "{{hours}} 小時",
-    "window_hm": "{{hours}} 小時 {{minutes}} 分"
+    "window_hm": "{{hours}} 小時 {{minutes}} 分",
+    "eyebrow": "閘道維運控制台",
+    "quota_pool_title": "憑證額度健康度",
+    "quota_pool_subtitle": "支援額度追蹤的各供應商帳號即時容量彙總",
+    "quota_healthy": "健康",
+    "quota_low": "偏低 (<20%)",
+    "quota_exhausted": "已限流",
+    "quota_sampling": "取樣中…",
+    "quota_next_reset": "下次重置",
+    "quota_open_link": "開啟額度面板",
+    "idle_traffic_note": "目前統計視窗內暫無請求流量 —— 代理服務在線就緒。"
   },
   "basic_settings": {
     "debug_enable": "啟用除錯模式",
@@ -554,7 +577,6 @@
     "reset_confirm_button": "確認重置",
     "reset_not_confirmed": "尚未確認額度重置成功，請重新整理額度後再決定是否重試。",
     "reset_cooldown_failed": "額度已重置，但代理冷卻清除失敗。請在原連線的認證檔案頁面使用「清除冷卻」，不要再次消耗重置卡。",
-
     "reset_success": "已重置「{{name}}」的 Codex 配額",
     "reset_failed": "重置「{{name}}」的 Codex 配額失敗：{{message}}",
     "plan_plus": "Plus",
@@ -1678,7 +1700,16 @@
     "weekday_wed": "三",
     "weekday_thu": "四",
     "weekday_fri": "五",
-    "weekday_sat": "六"
+    "weekday_sat": "六",
+    "loading_auto": "正在同步額度…",
+    "auto_cadence_hint": "每 ≥60 秒自動錯峰同步（最多 3 併發）",
+    "hero_eyebrow": "彙總容量與消耗預測",
+    "stat_active_accounts": "啟用帳號",
+    "stat_loaded": "已取樣",
+    "stat_attention": "限流 / 低餘量",
+    "stat_cadence": "額度同步",
+    "cadence_active": "每 60 秒",
+    "cadence_paused": "僅手動"
   },
   "routing": {
     "title": "路由編排",

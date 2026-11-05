@@ -94,7 +94,20 @@
   },
   "header": {
     "refresh_all": "Обновить всё",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "live_label": "Автообновление",
+    "live_off": "Выкл",
+    "live_5s": "5с",
+    "live_10s": "10с",
+    "live_30s": "30с",
+    "live_1m": "1м",
+    "live_stream": "Поток",
+    "live_paused": "Пауза",
+    "live_backoff": "Повтор",
+    "updated_just_now": "Обновлено только что",
+    "updated_seconds_ago": "Обновлено {{count}}с назад",
+    "updated_minutes_ago": "Обновлено {{count}}м назад",
+    "refresh_now": "Обновить сейчас"
   },
   "connection": {
     "status": "Статус подключения:"
@@ -205,7 +218,17 @@
     "cta_system_desc": "Информация о версии и центре управления.",
     "window_m": "{{minutes}} мин",
     "window_h": "{{hours}} ч",
-    "window_hm": "{{hours}} ч {{minutes}} мин"
+    "window_hm": "{{hours}} ч {{minutes}} мин",
+    "eyebrow": "Консоль оператора шлюза",
+    "quota_pool_title": "Состояние квот аккаунтов",
+    "quota_pool_subtitle": "Актуальная ёмкость по провайдерам с отслеживанием квот",
+    "quota_healthy": "Норма",
+    "quota_low": "Мало (<20%)",
+    "quota_exhausted": "Лимит исчерпан",
+    "quota_sampling": "Опрос…",
+    "quota_next_reset": "След. сброс",
+    "quota_open_link": "Открыть квоты",
+    "idle_traffic_note": "В текущем окне запросов нет — прокси подключён и готов к работе."
   },
   "basic_settings": {
     "debug_enable": "Включить режим отладки",
@@ -1654,7 +1677,16 @@
     "weekday_wed": "Ср",
     "weekday_thu": "Чт",
     "weekday_fri": "Пт",
-    "weekday_sat": "Сб"
+    "weekday_sat": "Сб",
+    "loading_auto": "Загрузка квоты…",
+    "auto_cadence_hint": "Автосинхронизация каждые ≥60с (до 3 одновременно)",
+    "hero_eyebrow": "Суммарная квота и прогноз расхода",
+    "stat_active_accounts": "Активные аккаунты",
+    "stat_loaded": "Загружено",
+    "stat_attention": "Лимит / мало",
+    "stat_cadence": "Синхр. квот",
+    "cadence_active": "Каждые 60с",
+    "cadence_paused": "Вручную"
   },
   "routing": {
     "title": "Маршрутизация",

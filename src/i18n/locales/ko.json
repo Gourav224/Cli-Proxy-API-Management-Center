@@ -94,7 +94,20 @@
   },
   "header": {
     "refresh_all": "모두 새로 고침",
-    "logout": "로그아웃"
+    "logout": "로그아웃",
+    "live_label": "자동 새로고침",
+    "live_off": "끔",
+    "live_5s": "5초",
+    "live_10s": "10초",
+    "live_30s": "30초",
+    "live_1m": "1분",
+    "live_stream": "스트리밍",
+    "live_paused": "일시중지",
+    "live_backoff": "재시도 대기",
+    "updated_just_now": "방금 업데이트됨",
+    "updated_seconds_ago": "{{count}}초 전 업데이트",
+    "updated_minutes_ago": "{{count}}분 전 업데이트",
+    "refresh_now": "지금 새로고침"
   },
   "connection": {
     "status": "연결 상태:"
@@ -206,7 +219,17 @@
     "cta_system_desc": "버전 세부 정보 및 관리 센터 정보입니다.",
     "window_m": "{{minutes}}분",
     "window_h": "{{hours}}시간",
-    "window_hm": "{{hours}}시간 {{minutes}}분"
+    "window_hm": "{{hours}}시간 {{minutes}}분",
+    "eyebrow": "게이트웨이 운영 콘솔",
+    "quota_pool_title": "자격 증명 할당량 상태",
+    "quota_pool_subtitle": "할당량 추적 제공업체의 실시간 계정 용량 요약",
+    "quota_healthy": "양호",
+    "quota_low": "부족 (<20%)",
+    "quota_exhausted": "속도 제한됨",
+    "quota_sampling": "수집 중…",
+    "quota_next_reset": "다음 초기화",
+    "quota_open_link": "할당량 콘솔 열기",
+    "idle_traffic_note": "현재 집계 구간에 기록된 요청이 없습니다 — 프록시가 온라인 상태입니다."
   },
   "basic_settings": {
     "debug_enable": "디버그 모드 활성화",
@@ -1651,7 +1674,16 @@
     "weekday_wed": "수",
     "weekday_thu": "목",
     "weekday_fri": "금",
-    "weekday_sat": "토"
+    "weekday_sat": "토",
+    "loading_auto": "할당량 조회 중…",
+    "auto_cadence_hint": "≥60초마다 자동 동기화 (최대 동시 3개)",
+    "hero_eyebrow": "통합 용량 및 소진 예측",
+    "stat_active_accounts": "활성 계정",
+    "stat_loaded": "수집됨",
+    "stat_attention": "제한됨 / 부족",
+    "stat_cadence": "할당량 동기화",
+    "cadence_active": "60초마다",
+    "cadence_paused": "수동 전용"
   },
   "routing": {
     "title": "라우팅",
