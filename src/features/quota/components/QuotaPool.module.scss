@@ -1,0 +1,287 @@
+// Width reserved for the y-axis labels so every card's plot starts at the same x.
+$y-axis-width: 44px;
+
+.pool {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-quaternary);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+
+  button {
+    padding: 4px 12px;
+    font: inherit;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      color: var(--text-primary);
+    }
+
+    &[aria-pressed='true'] {
+      background: var(--floating-surface, var(--bg-primary));
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+  }
+}
+
+.empty {
+  min-height: 96px;
+  display: grid;
+  place-items: center;
+  padding: $spacing-lg;
+  border: 1px solid var(--border-color);
+  border-radius: $radius-lg;
+  color: var(--text-quaternary);
+  font-size: 12px;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  border: 1px solid var(--border-color);
+  border-radius: $radius-lg;
+  background: var(--bg-primary);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+}
+
+.provider {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-sm;
+}
+
+.providerName {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--pool-color);
+}
+
+.accounts {
+  font-size: 12px;
+  color: var(--text-quaternary);
+}
+
+.total {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.totalValue {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.totalOf {
+  font-size: 12px;
+  color: var(--text-quaternary);
+}
+
+.stats {
+  display: flex;
+  gap: $spacing-lg;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.stat {
+  min-width: 96px;
+
+  dt {
+    font-size: 11px;
+    color: var(--text-quaternary);
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.plot {
+  display: grid;
+  grid-template-columns: $y-axis-width 1fr;
+  gap: 6px;
+}
+
+.yAxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+  font-size: 10.5px;
+  text-align: right;
+  color: var(--text-quaternary);
+  font-variant-numeric: tabular-nums;
+}
+
+.canvas {
+  position: relative;
+  height: 200px;
+  margin-bottom: 22px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.gridLine {
+  stroke: var(--border-color);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.area {
+  fill: var(--pool-color);
+  opacity: 0.12;
+}
+
+.recorded,
+.projected {
+  fill: none;
+  stroke: var(--pool-color);
+  stroke-width: 1.75;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.projected {
+  stroke-dasharray: 5 4;
+  opacity: 0.85;
+}
+
+.nowLine {
+  stroke: var(--text-quaternary);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.nowLabel,
+.resetLabel {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  font-size: 10.5px;
+  white-space: nowrap;
+  pointer-events: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.nowLabel {
+  top: -2px;
+  color: var(--text-quaternary);
+}
+
+.resetLabel {
+  margin-top: -4px;
+  color: var(--text-secondary);
+}
+
+.xAxis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 22px;
+
+  span {
+    position: absolute;
+    top: 6px;
+    transform: translateX(-50%);
+    font-size: 10.5px;
+    white-space: nowrap;
+    color: var(--text-quaternary);
+  }
+}
+
+.legend {
+  display: flex;
+  gap: $spacing-md;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swatchRecorded,
+.swatchProjected {
+  width: 16px;
+  height: 0;
+  border-top: 2px solid var(--pool-color);
+}
+
+.swatchProjected {
+  border-top-style: dashed;
+}
+
+.note {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--text-quaternary);
+}

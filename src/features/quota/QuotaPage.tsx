@@ -25,6 +25,7 @@ import { getQuotaCacheKey } from '@/utils/quota/identity';
 import { ProviderTabs } from '@/features/authFiles/components/ProviderTabs';
 import { QuotaHeader } from './components/QuotaHeader';
 import { QuotaCard } from './components/QuotaCard';
+import { QuotaPool } from './components/QuotaPool';
 import { QuotaTimeline } from './components/QuotaTimeline';
 import {
   CARD_ENTRANCE_BUDGET_MS,
@@ -388,6 +389,16 @@ export function QuotaPage() {
           <div className={styles.errorBanner} role="alert">
             {error}
           </div>
+        )}
+
+        {/* 汇总池只在列表落定后渲染：它读的是与卡片相同的额度缓存。 */}
+        {!loading && (
+          <QuotaPool
+            entries={filteredEntries}
+            quotaFor={getQuota}
+            displayNameFor={displayNameFor}
+            resolvedTheme={resolvedTheme}
+          />
         )}
 
         {loading ? (
