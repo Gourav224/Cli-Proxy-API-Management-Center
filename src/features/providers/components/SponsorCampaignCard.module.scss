@@ -180,10 +180,7 @@ $card-radius: 12px;
   .pool[data-pool='#{$name}'] {
     --pool-color: #{map.get($pool, color)};
     translate: calc((#{list.nth($x, 1)} + #{list.nth($x, 2)}) / 2) 0;
-    animation:
-      campaign-pool-#{$name}-x map.get($pool, tx) ease-in-out map.get($pool, dx) infinite alternate,
-      campaign-pool-#{$name}-y map.get($pool, ty) ease-in-out map.get($pool, dy) infinite alternate,
-      campaign-pool-morph map.get($pool, ts) ease-in-out map.get($pool, dx) infinite alternate;
+    animation: none;
   }
 
   @keyframes campaign-pool-#{$name}-x {
@@ -315,13 +312,10 @@ $card-radius: 12px;
   line-height: 1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
-  color: festive-ink();
+  color: #{$festive-cta-end};
 
-  @supports (background-clip: text) or (-webkit-background-clip: text) {
-    background: linear-gradient(100deg, #{$festive-cta-end}, #{$festive-cta} 55%, #d97706);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  :global([data-theme='dark']) & {
+    color: #fb923c;
   }
 }
 
@@ -342,10 +336,15 @@ $card-radius: 12px;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 38px;
+  min-height: 40px;
   padding: 0 18px;
   border-radius: 999px;
-  background: linear-gradient(100deg, #{$festive-cta}, #{$festive-cta-end});
+  background-color: #{$festive-cta};
+  background-image: linear-gradient(100deg, #{$festive-cta}, #{$festive-cta-end});
+
+  @media (max-width: 768px) {
+    min-height: 44px;
+  }
   color: #fff;
   font-size: 14px;
   font-weight: 650;

@@ -74,3 +74,11 @@
     transform: none;
   }
 }
+
+@media (max-width: 768px) {
+  .segment {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 14px;
+  }
+}

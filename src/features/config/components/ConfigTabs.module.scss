@@ -128,3 +128,9 @@
     transform: none;
   }
 }
+
+@media (max-width: 768px) {
+  .tab {
+    min-height: 44px;
+  }
+}

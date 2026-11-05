@@ -231,8 +231,9 @@
 
 .pluginName {
   display: flex;
-  align-items: center;
-  gap: $spacing-sm;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px $spacing-sm;
   min-width: 0;
 
   h2 {
@@ -241,8 +242,8 @@
     color: var(--text-primary);
     font-size: 15px;
     font-weight: 650;
-    line-height: 1.3;
-    @include text-ellipsis;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -320,15 +321,15 @@
 }
 
 .badgeSuccess {
-  background: rgba($success-color, 0.1);
-  border: 1px solid rgba($success-color, 0.2);
-  color: var(--success-color);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
 }
 
 .badgeWarning {
-  background: rgba($warning-color, 0.1);
-  border: 1px solid rgba($warning-color, 0.2);
-  color: var(--warning-color);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: var(--warning-text);
 }
 
 .badgeMuted {
@@ -584,4 +585,23 @@
     }
   }
 
+}
+
+@media (max-width: 768px) {
+  .statusPill {
+    white-space: normal;
+  }
+
+  .statusPathValue,
+  .metaPath {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+  }
+
+  .iconLink {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }

@@ -104,12 +104,18 @@ export function DotMatrixHero() {
     });
 
     const tick = (now: number) => {
+      if (now - lastPaint >= FRAME_INTERVAL_MS) {
+        lastPaint = now;
+        if (startTime === null) startTime = now - clock * 1000;
+        clock = (now - startTime) / 1000;
+        const inIntro = clock < grid.introDuration;
+        render(clock, inIntro);
+        if (!inIntro) {
+          running = false;
+          return;
+        }
+      }
       frameId = requestAnimationFrame(tick);
-      if (now - lastPaint < FRAME_INTERVAL_MS) return;
-      lastPaint = now;
-      if (startTime === null) startTime = now - clock * 1000;
-      clock = (now - startTime) / 1000;
-      render(clock, clock < grid.introDuration);
     };
 
     const start = () => {

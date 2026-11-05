@@ -357,3 +357,20 @@ $field-radius: 10px;
     animation: fieldFade 200ms ease;
   }
 }
+
+@media (max-width: 768px) {
+  .textButton {
+    display: inline-flex;
+    align-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 4px;
+    margin-block: -10px;
+  }
+
+  .iconButton {
+    right: 0;
+    width: 44px;
+    height: 44px;
+  }
+}

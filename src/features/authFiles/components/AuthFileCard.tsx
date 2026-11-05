@@ -157,7 +157,7 @@ export function AuthFileCard(props: AuthFileCardProps) {
             }}
           >
             {typeLabel}
-          </span>
+          </span>{' '}
           <span
             className={`${styles.account} ${identity.kind === 'fileName' ? styles.accountMono : ''}`}
             title={identity.primary}

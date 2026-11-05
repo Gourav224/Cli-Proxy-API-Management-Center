@@ -350,12 +350,12 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
   border-color: color-mix(in srgb, var(--viz-success) 38%, var(--border-color));
 
   .tierIndex {
-    background: var(--viz-success);
+    background: #047857;
     color: #fff;
   }
 
   .tierState {
-    color: var(--viz-success);
+    color: var(--success-text);
     font-weight: 600;
   }
 }
@@ -366,7 +366,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
 }
 
 .tierCooling .tierState {
-  color: var(--amber-color);
+  color: var(--amber-text);
 }
 
 .tierUnknown .tierState {

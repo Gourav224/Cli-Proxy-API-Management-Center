@@ -418,22 +418,22 @@
 }
 
 .badgeSuccess {
-  background: rgba($success-color, 0.1);
-  border: 1px solid rgba($success-color, 0.2);
-  color: var(--success-color);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
 }
 
 .badgeWarning {
-  background: rgba($warning-color, 0.1);
-  border: 1px solid rgba($warning-color, 0.2);
-  color: var(--warning-color);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: var(--warning-text);
 }
 
 .badgeUntrusted {
   gap: 4px;
-  background: rgba($warning-color, 0.12);
-  border: 1px solid rgba($warning-color, 0.4);
-  color: var(--danger-color);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: var(--danger-text);
 
   svg {
     flex-shrink: 0;
@@ -853,5 +853,29 @@
 @include mobile {
   .page {
     gap: $spacing-md;
+  }
+}
+
+@media (max-width: 768px) {
+  .statusPill {
+    white-space: normal;
+  }
+
+  .statusPathValue {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+  }
+
+  .filterChip {
+    min-height: 44px;
+    padding: 6px 14px;
+  }
+
+  .cardDescToggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 }

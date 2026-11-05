@@ -178,10 +178,7 @@ $site-radius: 12px;
     --pool-color: #{map.get($pool, color)};
     /* 静止构图（减弱动效时停在这里）：取轨迹中点 */
     translate: calc((#{list.nth($x, 1)} + #{list.nth($x, 2)}) / 2) 0;
-    animation:
-      sponsor-pool-#{$name}-x map.get($pool, tx) ease-in-out map.get($pool, dx) infinite alternate,
-      sponsor-pool-#{$name}-y map.get($pool, ty) ease-in-out map.get($pool, dy) infinite alternate,
-      sponsor-pool-morph map.get($pool, ts) ease-in-out map.get($pool, dx) infinite alternate;
+    animation: none;
   }
 
   @keyframes sponsor-pool-#{$name}-x {
@@ -531,5 +528,19 @@ $site-radius: 12px;
   .site:has(.siteMain:hover),
   .signUp:active {
     transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .siteMain {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .signUp {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 }

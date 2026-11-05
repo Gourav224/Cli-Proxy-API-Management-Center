@@ -194,20 +194,20 @@
 }
 
 .countOk {
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
 }
 
 .countFail {
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
 }
 
 /* 绿色只给活的流量：有计数才点亮 */
 .countLive.countOk {
-  color: var(--viz-success);
+  color: var(--success-text);
 }
 
 .countLive.countFail {
-  color: var(--viz-failure);
+  color: var(--danger-text);
 }
 
 /* ---------- ProviderStatusBar 注入样式（18 个契约类名） ---------- */

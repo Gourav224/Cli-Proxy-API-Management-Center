@@ -471,8 +471,8 @@
 }
 .statusInfo,
 .levelInfo {
-  color: var(--info-color);
-  background: color-mix(in srgb, var(--info-color) 8%, transparent);
+  color: var(--info-text, var(--info-color));
+  background: var(--info-bg, color-mix(in srgb, var(--info-color) 10%, transparent));
 }
 .statusWarn,
 .levelWarn {
@@ -616,7 +616,7 @@
 
 @media (max-width: 768px) {
   .container {
-    --log-control-height: 36px;
+    --log-control-height: 44px;
     gap: 16px;
   }
   .pageHeader {
@@ -626,8 +626,18 @@
     font-size: 18px;
   }
   .tabItem {
-    padding: 6px 8px;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 6px 12px;
+    font-size: 12.5px;
+  }
+  .searchClear {
+    width: 44px;
+    height: 44px;
+  }
+  .filterChip {
+    min-height: 44px;
   }
   .filters {
     padding: 12px;

@@ -122,3 +122,10 @@
 .optionHighlighted {
   background: var(--bg-secondary);
 }
+
+@media (max-width: 768px) {
+  .trigger,
+  .triggerSm {
+    min-height: 44px;
+  }
+}

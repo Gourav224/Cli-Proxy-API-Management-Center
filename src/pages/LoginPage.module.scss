@@ -91,6 +91,12 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: $breakpoint-mobile) {
+    white-space: normal;
+    line-height: 1.2;
+    font-size: 12.5px;
+  }
 }
 
 .brandLogo {
@@ -107,6 +113,11 @@
   button[aria-haspopup] {
     justify-content: flex-end;
     height: 32px;
+
+    @media (max-width: $breakpoint-mobile) {
+      min-height: 44px;
+      min-width: 44px;
+    }
     padding: 0 10px;
     border-color: transparent;
     background: transparent;

@@ -21,31 +21,32 @@
 
 .aboutHeader {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
-  gap: $spacing-md;
-  padding: $spacing-lg 0 $spacing-xl;
+  gap: 16px;
+  padding: 4px 0 20px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 16px;
 }
 
 .aboutLogo {
-  width: 108px;
-  height: 108px;
-  border-radius: 26px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   object-fit: cover;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  flex-shrink: 0;
+  box-shadow: var(--shadow);
 }
 
 .aboutTitle {
-  width: min(100%, 920px);
-  font-size: clamp(28px, 4.2vw, 44px);
-  font-weight: 800;
-  line-height: 1.12;
+  font-size: clamp(20px, 2.4vw, 24px);
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
-  text-align: center;
-  text-wrap: balance;
+  letter-spacing: -0.018em;
+  text-align: left;
   white-space: normal;
   overflow-wrap: anywhere;
 }
@@ -338,10 +339,10 @@
 
 .linkDesc {
   font-size: 13px;
+  line-height: 1.45;
   color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 768px) {

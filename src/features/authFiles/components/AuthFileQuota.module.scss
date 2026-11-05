@@ -90,7 +90,8 @@ button.quotaMessageAction {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 4px 8px;
 }
 
 .quotaModel {
@@ -98,7 +99,7 @@ button.quotaMessageAction {
   font-size: $quota-font-size;
   font-weight: 600;
   color: var(--text-secondary);
-  @include text-ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .quotaMeta {

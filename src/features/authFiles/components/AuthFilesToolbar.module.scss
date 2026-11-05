@@ -90,7 +90,7 @@
 }
 
 .segmentProblem.segmentActive {
-  color: var(--danger-color);
+  color: var(--danger-text);
   background: color-mix(
     in srgb,
     var(--danger-color) 12%,
@@ -224,7 +224,7 @@
   cursor: pointer;
   font-size: 12px;
   font-weight: 550;
-  color: var(--danger-color);
+  color: var(--danger-text);
   white-space: nowrap;
   transition:
     background-color var(--dur-hover, 200ms) var(--ease-out-strong, ease-out),
@@ -293,5 +293,18 @@
 
   .popover {
     animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .segment {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+  }
+
+  .displayButton,
+  .deleteAction {
+    min-height: 44px;
   }
 }

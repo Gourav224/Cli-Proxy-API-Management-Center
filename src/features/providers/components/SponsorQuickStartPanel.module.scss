@@ -228,3 +228,9 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .emptyActionButton {
+    min-height: 44px;
+  }
+}

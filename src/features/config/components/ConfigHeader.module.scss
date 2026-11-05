@@ -64,11 +64,11 @@
 }
 
 .metaError {
-  color: var(--viz-failure);
+  color: var(--danger-text);
 }
 
 .metaOk {
-  color: var(--viz-success);
+  color: var(--success-text);
 }
 
 /* ---------- 动作区 ---------- */
@@ -152,5 +152,11 @@
 
   .spinning {
     animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .ghostAction {
+    min-height: 44px;
   }
 }
