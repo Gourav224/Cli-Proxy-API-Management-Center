@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { authFilesApi } from '@/services/api';
-import { useAuthStore, useConfigStore, useModelsStore } from '@/stores';
+import { markLiveDataUpdated, useAuthStore, useConfigStore, useModelsStore } from '@/stores';
 import { useApiKeysForModels } from '@/hooks/useApiKeysForModels';
 import { useProviderRecentRequests } from '@/components/providers/hooks/useProviderRecentRequests';
 import {
@@ -151,9 +151,9 @@ export function useDashboardOverview() {
 
   useEffect(() => {
     if (!connected) return;
-    void fetchConfig().catch(() => undefined);
-    void loadAuthFiles();
-    void loadModels();
+    void Promise.allSettled([fetchConfig(), loadAuthFiles(), loadModels()]).then(() => {
+      markLiveDataUpdated();
+    });
   }, [connected, fetchConfig, loadAuthFiles, loadModels]);
 
   const refresh = useCallback(async () => {
@@ -164,6 +164,7 @@ export function useDashboardOverview() {
       loadModels(),
       refreshRecentRequests(),
     ]);
+    markLiveDataUpdated();
   }, [connected, fetchConfig, loadAuthFiles, loadModels, refreshRecentRequests]);
 
   const providerKeyCounts = useMemo(() => (config ? getProviderKeyCounts(config) : null), [config]);
@@ -290,6 +291,7 @@ export function useDashboardOverview() {
     providerKeyCounts,
     traffic,
     providers,
+    authFiles,
     credentials,
     refresh,
   };
