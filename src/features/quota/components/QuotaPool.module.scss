@@ -95,7 +95,7 @@ $y-axis-width: 48px;
 }
 
 .empty {
-  min-height: 108px;
+  min-height: 220px;
   display: grid;
   place-items: center;
   padding: $spacing-lg;
@@ -252,6 +252,8 @@ $y-axis-width: 48px;
   display: grid;
   grid-template-columns: $y-axis-width 1fr;
   gap: 8px;
+  // Room for the "Now" and reset markers, which sit above the plot area.
+  padding-top: 20px;
 }
 
 .yAxis {

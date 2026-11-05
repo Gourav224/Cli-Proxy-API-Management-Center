@@ -210,10 +210,24 @@ describe('QuotaPool rendering', () => {
     expect(markup).toContain('role="img"');
   });
 
-  test('renders nothing without loaded quota', () => {
+  test('keeps an empty placeholder while credentials exist but no quota is loaded', () => {
     const markup = renderToStaticMarkup(
       createElement(QuotaPool, {
         entries,
+        quotaFor: () => undefined,
+        displayNameFor: (name: string) => name,
+        resolvedTheme: 'dark' as const,
+        now: NOW,
+        historyFor: () => [],
+      })
+    );
+    expect(markup).toContain('role="status"');
+  });
+
+  test('renders nothing without any credentials', () => {
+    const markup = renderToStaticMarkup(
+      createElement(QuotaPool, {
+        entries: [],
         quotaFor: () => undefined,
         displayNameFor: (name: string) => name,
         resolvedTheme: 'dark' as const,

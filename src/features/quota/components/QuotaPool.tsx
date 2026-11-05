@@ -162,7 +162,8 @@ export function QuotaPool({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, mode, historyFor, historyVersion]);
 
-  if (pools.length === 0) return null;
+  // Keep the section mounted while credentials exist so the page doesn't jump when quota loads.
+  if (pools.length === 0 && entries.length === 0) return null;
 
   return (
     <section className={styles.pool}>
@@ -330,7 +331,7 @@ function PoolCard({
         left: ((at - startMs) / (endMs - startMs)) * 100,
         label:
           mode === 'weekly'
-            ? date.toLocaleDateString(i18n.language, { weekday: 'short', day: 'numeric' })
+            ? date.toLocaleDateString(i18n.language, { weekday: 'short' })
             : date.toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' }),
       });
     }

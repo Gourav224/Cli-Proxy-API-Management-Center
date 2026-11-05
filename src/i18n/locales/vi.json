@@ -1612,6 +1612,8 @@
     "pool_stat_next_reset": "Đặt lại tiếp theo",
     "pool_stat_burn": "Tiêu thụ, {{count}} giờ qua",
     "pool_burn_collecting": "đang thu thập…",
+    "pool_accounts_one": "{{count}} tài khoản",
+    "pool_accounts_other": "{{count}} tài khoản",
     "pool_accounts": "{{count}} tài khoản",
     "pool_of": "trên {{capacity}}",
     "pool_chart_label": "Hạn mức gộp {{provider}} theo thời gian",

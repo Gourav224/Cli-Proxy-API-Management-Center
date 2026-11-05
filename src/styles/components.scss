@@ -48,6 +48,16 @@
     }
   }
 
+  // Row-level destructive action: red text on a quiet button; the solid red stays for confirmations.
+  &.btn-secondary.btn-danger-text {
+    color: var(--danger-text, var(--danger-color));
+
+    &:hover {
+      border-color: var(--danger-color);
+      background-color: color-mix(in srgb, var(--danger-color) 10%, var(--bg-tertiary));
+    }
+  }
+
   &.btn-danger {
     background-color: var(--danger-color);
     border-color: var(--danger-color);

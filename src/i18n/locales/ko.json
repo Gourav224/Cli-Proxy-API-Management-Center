@@ -1661,6 +1661,8 @@
     "pool_stat_next_reset": "다음 초기화",
     "pool_stat_burn": "소진, 최근 {{count}}시간",
     "pool_burn_collecting": "수집 중…",
+    "pool_accounts_one": "계정 {{count}}개",
+    "pool_accounts_other": "계정 {{count}}개",
     "pool_accounts": "계정 {{count}}개",
     "pool_of": "/ {{capacity}}",
     "pool_chart_label": "{{provider}} 통합 할당량 추이",

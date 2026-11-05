@@ -1687,6 +1687,8 @@
     "pool_stat_next_reset": "下次重置",
     "pool_stat_burn": "消耗（近 {{count}} 小時）",
     "pool_burn_collecting": "收集中…",
+    "pool_accounts_one": "{{count}} 個帳號",
+    "pool_accounts_other": "{{count}} 個帳號",
     "pool_accounts": "{{count}} 個帳號",
     "pool_of": "共 {{capacity}}",
     "pool_chart_label": "{{provider}} 額度池隨時間變化",

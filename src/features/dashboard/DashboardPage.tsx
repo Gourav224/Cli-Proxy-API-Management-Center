@@ -234,11 +234,9 @@ export function DashboardPage() {
               {statusBadge.label}
             </span>
           </div>
-          <p className={styles.subtitle}>
-            {traffic.total === 0 && connected
-              ? t('dashboard.idle_traffic_note')
-              : t('dashboard.traffic_description', { window: windowLabel })}
-          </p>
+          {traffic.total === 0 && connected ? (
+            <p className={styles.subtitle}>{t('dashboard.idle_traffic_note')}</p>
+          ) : null}
         </div>
 
         <div className={styles.headerActions}>

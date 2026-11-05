@@ -700,7 +700,8 @@ export function PluginsPage() {
                     {t('plugin_management.edit_config')}
                   </Button>
                   <Button
-                    variant="danger"
+                    variant="secondary"
+                    className="btn-danger-text"
                     size="sm"
                     onClick={() => handleDeletePlugin(plugin)}
                     disabled={!connected || actionBusy}

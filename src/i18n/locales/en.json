@@ -1661,6 +1661,8 @@
     "pool_stat_next_reset": "Next reset",
     "pool_stat_burn": "Burn, last {{count}}h",
     "pool_burn_collecting": "collecting…",
+    "pool_accounts_one": "{{count}} account",
+    "pool_accounts_other": "{{count}} accounts",
     "pool_accounts": "{{count}} accounts",
     "pool_of": "of {{capacity}}",
     "pool_chart_label": "{{provider}} pooled quota over time",

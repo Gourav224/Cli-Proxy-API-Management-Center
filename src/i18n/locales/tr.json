@@ -1678,6 +1678,8 @@
     "pool_stat_next_reset": "Sonraki sıfırlama",
     "pool_stat_burn": "Son {{count}}sa tüketim",
     "pool_burn_collecting": "toplanıyor…",
+    "pool_accounts_one": "{{count}} hesap",
+    "pool_accounts_other": "{{count}} hesap",
     "pool_accounts": "{{count}} hesap",
     "pool_of": "/ {{capacity}}",
     "pool_chart_label": "Zaman içinde {{provider}} toplam kotası",
