@@ -272,6 +272,7 @@ $y-axis-width: 48px;
   position: relative;
   height: 148px;
   margin-bottom: 22px;
+  container-type: inline-size;
 }
 
 .svg {
@@ -353,6 +354,13 @@ $y-axis-width: 48px;
     font-size: 10.5px;
     white-space: nowrap;
     color: var(--text-tertiary);
+  }
+
+  // Two weeks of day labels don't fit a narrow card: keep every other one.
+  @container (max-width: 420px) {
+    span:nth-child(even) {
+      display: none;
+    }
   }
 }
 
