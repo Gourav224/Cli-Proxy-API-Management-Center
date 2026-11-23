@@ -199,7 +199,6 @@ export function DashboardPage() {
       to: '/quota',
       icon: <IconSidebarQuota size={18} />,
       title: t('nav.quota_management'),
-      description: t('dashboard.cta_quota_desc'),
     },
     {
       to: '/auth-files',
@@ -217,7 +216,6 @@ export function DashboardPage() {
       to: '/logs',
       icon: <IconSidebarLogs size={18} />,
       title: t('nav.logs'),
-      description: t('dashboard.cta_logs_desc'),
     },
     {
       to: '/config',
@@ -229,7 +227,6 @@ export function DashboardPage() {
       to: '/system',
       icon: <IconSidebarSystem size={18} />,
       title: t('nav.system_info'),
-      description: t('dashboard.cta_system_desc'),
     },
   ];
 

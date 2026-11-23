@@ -36,6 +36,11 @@
   --error-color: #b93829;
   --danger-color: var(--error-color);
   --danger-text: #991b1b;
+  --danger-bg: var(--warning-bg);
+  --danger-border: var(--warning-border);
+  --danger-hover: color-mix(in srgb, var(--danger-color) 88%, #000);
+  --success-bg: color-mix(in srgb, var(--success-color) 12%, transparent);
+  --success-border: color-mix(in srgb, var(--success-color) 38%, transparent);
   --info-color: var(--primary-color);
   --info-text: #1e40af;
 
@@ -121,6 +126,11 @@
   --error-color: #b93829;
   --danger-color: var(--error-color);
   --danger-text: #991b1b;
+  --danger-bg: var(--warning-bg);
+  --danger-border: var(--warning-border);
+  --danger-hover: color-mix(in srgb, var(--danger-color) 88%, #000);
+  --success-bg: color-mix(in srgb, var(--success-color) 12%, transparent);
+  --success-border: color-mix(in srgb, var(--success-color) 38%, transparent);
   --info-color: var(--primary-color);
   --info-text: #1e40af;
 
@@ -192,6 +202,11 @@
   --error-color: #c24131;
   --danger-color: var(--error-color);
   --danger-text: #fca5a5;
+  --danger-bg: var(--warning-bg);
+  --danger-border: var(--warning-border);
+  --danger-hover: color-mix(in srgb, var(--danger-color) 88%, #000);
+  --success-bg: color-mix(in srgb, var(--success-color) 12%, transparent);
+  --success-border: color-mix(in srgb, var(--success-color) 38%, transparent);
   --info-color: #a9a298;
   --info-text: #93c5fd;
 

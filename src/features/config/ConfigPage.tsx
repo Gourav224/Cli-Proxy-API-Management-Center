@@ -306,12 +306,7 @@ export function ConfigPage() {
       case 'advanced':
         return <SectionAdvanced {...sectionProps} />;
       case 'payload':
-        return (
-          <SectionPayload
-            {...sectionProps}
-            hasPayloadValidationErrors={visualHasPayloadValidationErrors}
-          />
-        );
+        return <SectionPayload {...sectionProps} />;
     }
   };
 
