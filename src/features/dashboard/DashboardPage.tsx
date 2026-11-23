@@ -21,6 +21,7 @@ import { useQuotaAutoRefresh } from '@/features/quota/hooks/useQuotaAutoRefresh'
 import type { QuotaCardState } from '@/features/quota/providers';
 import type { QuotaProviderType } from '@/features/quota/providers/types';
 import { providerIdOfAuthFile, useDashboardOverview } from './hooks/useDashboardOverview';
+import { AccountHealthPanel } from './components/AccountHealthPanel';
 import { Meter } from './components/Meter';
 import { Sparkline } from './components/Sparkline';
 import { ThroughputChart } from './components/ThroughputChart';
@@ -354,6 +355,8 @@ export function DashboardPage() {
           </span>
         </article>
       </section>
+
+      <AccountHealthPanel files={authFiles} nowMs={now} />
 
       {/* Primary Focal Grid: Throughput Timeline + Live Credential Quota Pool Health */}
       <section className={styles.mainSplit}>

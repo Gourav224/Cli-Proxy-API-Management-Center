@@ -1,0 +1,162 @@
+@use '@/styles/variables' as *;
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  min-width: 0;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: 16px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.headerCopy {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.allGood {
+  margin: 0;
+  font-size: 13px;
+  color: var(--success-text);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1.2fr) minmax(0, 1.4fr) minmax(80px, 0.8fr);
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-color);
+
+  &:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 40px minmax(0, 1fr);
+
+    .reasons,
+    .meter {
+      grid-column: 2;
+    }
+  }
+}
+
+.score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: $font-mono;
+  font-size: 13px;
+  font-weight: 700;
+  border: 2px solid currentColor;
+}
+
+.score_healthy {
+  color: var(--success-color);
+}
+
+.score_degraded {
+  color: var(--amber-color);
+}
+
+.score_critical {
+  color: var(--danger-color);
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.provider {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+.reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  min-width: 0;
+}
+
+.reason {
+  padding: 2px 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border-radius: $radius-full;
+}
+
+.meter {
+  min-width: 0;
+}
+
+.more {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
