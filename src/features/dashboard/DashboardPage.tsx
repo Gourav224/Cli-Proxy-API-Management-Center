@@ -16,7 +16,11 @@ import { formatCompactNumber, formatDateValue, formatPercent } from '@/utils/for
 import { getQuotaCacheKey } from '@/utils/quota/identity';
 import { getTypeLabel, isReloginRequired } from '@/features/authFiles/constants';
 import { classifyQuotaFiles, type QuotaFileEntry } from '@/features/quota/logic';
-import { buildQuotaDisplayNameMap, summarizeQuotaFleet } from '@/features/quota/quotaFleetSummary';
+import {
+  buildQuotaDisplayNameMap,
+  minQuotaRemaining,
+  summarizeQuotaFleet,
+} from '@/features/quota/quotaFleetSummary';
 import { useQuotaAutoRefresh } from '@/features/quota/hooks/useQuotaAutoRefresh';
 import type { QuotaCardState } from '@/features/quota/providers';
 import type { QuotaProviderType } from '@/features/quota/providers/types';
@@ -131,6 +135,17 @@ export function DashboardPage() {
     () => summarizeQuotaFleet(quotaEntries, getQuota, displayNameFor, now),
     [displayNameFor, getQuota, now, quotaEntries]
   );
+
+  const quotaRemainingByName = useMemo(() => {
+    const map = new Map<string, number | null>();
+    for (const entry of quotaEntries) {
+      const quota = getQuota(entry);
+      if (quota?.status === 'success') {
+        map.set(entry.file.name, minQuotaRemaining(entry, quota, displayNameFor(entry.file.name)));
+      }
+    }
+    return map;
+  }, [displayNameFor, getQuota, quotaEntries]);
 
   const windowLabel = useMemo(() => {
     if (traffic.windowMinutes <= 0) return DASH;
@@ -356,7 +371,11 @@ export function DashboardPage() {
         </article>
       </section>
 
-      <AccountHealthPanel files={authFiles} nowMs={now} />
+      <AccountHealthPanel
+        files={authFiles}
+        nowMs={now}
+        quotaRemainingByName={quotaRemainingByName}
+      />
 
       {/* Primary Focal Grid: Throughput Timeline + Live Credential Quota Pool Health */}
       <section className={styles.mainSplit}>

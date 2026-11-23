@@ -59,6 +59,21 @@ export function buildQuotaDisplayNameMap(
   return out;
 }
 
+/** Lowest remaining percentage across an account's limits; null when none is reported. */
+export function minQuotaRemaining(
+  entry: QuotaFileEntry,
+  quota: QuotaCardState,
+  displayName: string
+): number | null {
+  const lane = buildTimelineLane({
+    name: entry.file.name,
+    displayName,
+    provider: entry.type,
+    quota,
+  });
+  return lane.limits.length > 0 ? Math.min(...lane.limits.map((l) => l.remaining)) : lane.remaining;
+}
+
 export function summarizeQuotaFleet(
   entries: readonly QuotaFileEntry[],
   quotaFor: (entry: QuotaFileEntry) => QuotaCardState | undefined,
@@ -112,17 +127,7 @@ export function summarizeQuotaFleet(
     loaded += 1;
     bucket.loaded += 1;
 
-    const lane = buildTimelineLane({
-      name: entry.file.name,
-      displayName: displayNameFor(entry.file.name),
-      provider: entry.type,
-      quota,
-    });
-
-    const minRemaining =
-      lane.limits.length > 0
-        ? Math.min(...lane.limits.map((l) => l.remaining))
-        : lane.remaining;
+    const minRemaining = minQuotaRemaining(entry, quota, displayNameFor(entry.file.name));
 
     if (minRemaining !== null && Number.isFinite(minRemaining)) {
       bucket.remainingSum += minRemaining;

@@ -244,7 +244,9 @@
     "health_reason_cooldown": "Beklemede",
     "health_reason_model_cooldown": "Model beklemede",
     "health_reason_failures": "Son isteklerin %{{percent}}'i başarısız",
-    "health_reason_low_traffic_failures": "Son istekler başarısız"
+    "health_reason_low_traffic_failures": "Son istekler başarısız",
+    "health_reason_quota_exhausted": "Kota tükendi",
+    "health_reason_quota_low": "Kota düşük (%{{percent}} kaldı)"
   },
   "basic_settings": {
     "debug_enable": "Hata Ayıklama Modunu Etkinleştir",

@@ -18,6 +18,29 @@ export interface PluginResourceEntry {
   route: string;
 }
 
+/**
+ * Plugins ship one fixed menu text, so a plugin written in another language shows up untranslated.
+ * For known plugins we carry translations here; unknown plugins and unlisted languages keep the
+ * plugin's own text.
+ */
+const KNOWN_PLUGIN_MENU_TEXT: Record<string, Record<string, { label: string; description: string }>> = {
+  'cap-token-usage-tracker': {
+    en: { label: 'Token usage', description: 'Persistent token usage, request and latency statistics.' },
+    ru: { label: 'Использование токенов', description: 'Сохранённая статистика токенов, запросов и задержек.' },
+    vi: { label: 'Mức dùng token', description: 'Thống kê token, yêu cầu và độ trễ được lưu trữ.' },
+    ko: { label: '토큰 사용량', description: '저장된 토큰 사용량, 요청 및 지연 시간 통계.' },
+    tr: { label: 'Token kullanımı', description: 'Kalıcı token kullanımı, istek ve gecikme istatistikleri.' },
+  },
+};
+
+export const localizePluginResourceEntry = (
+  entry: PluginResourceEntry,
+  language: string | undefined
+): PluginResourceEntry => {
+  const text = language ? KNOWN_PLUGIN_MENU_TEXT[entry.pluginID]?.[language] : undefined;
+  return text ? { ...entry, label: text.label, description: text.description } : entry;
+};
+
 export const getPluginTitle = (plugin: PluginListEntry) =>
   plugin.metadata?.name.trim() || plugin.id;
 

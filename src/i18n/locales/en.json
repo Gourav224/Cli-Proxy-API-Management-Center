@@ -244,7 +244,9 @@
     "health_reason_cooldown": "On cooldown",
     "health_reason_model_cooldown": "Model cooldown",
     "health_reason_failures": "{{percent}}% of recent requests failed",
-    "health_reason_low_traffic_failures": "Recent requests failed"
+    "health_reason_low_traffic_failures": "Recent requests failed",
+    "health_reason_quota_exhausted": "Quota used up",
+    "health_reason_quota_low": "Quota low ({{percent}}% left)"
   },
   "basic_settings": {
     "debug_enable": "Enable Debug Mode",

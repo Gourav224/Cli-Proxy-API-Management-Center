@@ -10,6 +10,7 @@ import { getErrorMessage, isRecord } from '@/utils/helpers';
 import type { PluginListResponse } from '@/types';
 import {
   collectPluginResourceEntries,
+  localizePluginResourceEntry,
   PLUGIN_RESOURCES_REFRESH_EVENT,
   resolvePluginAssetURL,
 } from './pluginResources';
@@ -31,7 +32,7 @@ const parseMenuIndex = (value = '') => {
 };
 
 export function PluginResourcePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const params = useParams<{ pluginId: string; menuIndex: string }>();
   const connectionStatus = useAuthStore((state) => state.connectionStatus);
   const apiBase = useAuthStore((state) => state.apiBase);
@@ -88,8 +89,11 @@ export function PluginResourcePage() {
 
   const resource = useMemo(() => {
     const entries = collectPluginResourceEntries(data?.plugins ?? []);
-    return entries.find((entry) => entry.pluginID === pluginID && entry.menuIndex === menuIndex);
-  }, [data?.plugins, menuIndex, pluginID]);
+    const found = entries.find(
+      (entry) => entry.pluginID === pluginID && entry.menuIndex === menuIndex
+    );
+    return found ? localizePluginResourceEntry(found, i18n.language) : undefined;
+  }, [data?.plugins, i18n.language, menuIndex, pluginID]);
 
   const iframeSrc = resource ? resolvePluginAssetURL(resource.menu.path, apiBase) : '';
 

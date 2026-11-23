@@ -244,7 +244,9 @@
     "health_reason_cooldown": "冷却中",
     "health_reason_model_cooldown": "模型冷却中",
     "health_reason_failures": "近期请求失败率 {{percent}}%",
-    "health_reason_low_traffic_failures": "近期请求失败"
+    "health_reason_low_traffic_failures": "近期请求失败",
+    "health_reason_quota_exhausted": "额度已用尽",
+    "health_reason_quota_low": "额度偏低（剩余 {{percent}}%）"
   },
   "basic_settings": {
     "debug_enable": "启用调试模式",

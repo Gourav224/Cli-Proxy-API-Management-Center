@@ -81,6 +81,32 @@ describe('computeAccountHealth', () => {
   });
 });
 
+describe('quota in the score', () => {
+  test('exhausted quota caps the score and says so', () => {
+    const h = computeAccountHealth(file(), NOW, 0);
+    expect(h).toMatchObject({ score: 40, level: 'critical', reasons: ['quota_exhausted'], quotaRemaining: 0 });
+  });
+
+  test('low quota costs ten points but stays healthy enough to serve', () => {
+    const h = computeAccountHealth(file(), NOW, 15);
+    expect(h).toMatchObject({ score: 90, level: 'healthy', reasons: ['quota_low'] });
+  });
+
+  test('plenty of quota or unknown quota changes nothing', () => {
+    expect(computeAccountHealth(file(), NOW, 80).score).toBe(100);
+    expect(computeAccountHealth(file(), NOW, null).score).toBe(100);
+  });
+
+  test('quota never rescues an account that is already failing', () => {
+    expect(computeAccountHealth(file({ status: 'error', unavailable: true, statusMessage: 'x' }), NOW, 100).score).toBeLessThanOrEqual(10);
+  });
+
+  test('fleet summary looks quota up by auth file name', () => {
+    const fleet = summarizeFleetHealth([file({ name: 'a.json' }), file({ name: 'b.json' })], NOW, new Map([['b.json', 1]]));
+    expect(fleet.accounts.map((a) => [a.file.name, a.score])).toEqual([['b.json', 40], ['a.json', 100]]);
+  });
+});
+
 describe('summarizeFleetHealth', () => {
   test('orders worst first, leaves disabled last, and averages scored accounts only', () => {
     const fleet = summarizeFleetHealth(

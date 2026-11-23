@@ -244,7 +244,9 @@
     "health_reason_cooldown": "冷卻中",
     "health_reason_model_cooldown": "模型冷卻中",
     "health_reason_failures": "近期請求失敗率 {{percent}}%",
-    "health_reason_low_traffic_failures": "近期請求失敗"
+    "health_reason_low_traffic_failures": "近期請求失敗",
+    "health_reason_quota_exhausted": "額度已用盡",
+    "health_reason_quota_low": "額度偏低（剩餘 {{percent}}%）"
   },
   "basic_settings": {
     "debug_enable": "啟用除錯模式",

@@ -244,7 +244,9 @@
     "health_reason_cooldown": "쿨다운 중",
     "health_reason_model_cooldown": "모델 쿨다운",
     "health_reason_failures": "최근 요청 {{percent}}% 실패",
-    "health_reason_low_traffic_failures": "최근 요청 실패"
+    "health_reason_low_traffic_failures": "최근 요청 실패",
+    "health_reason_quota_exhausted": "할당량 소진",
+    "health_reason_quota_low": "할당량 부족 (남은 {{percent}}%)"
   },
   "basic_settings": {
     "debug_enable": "디버그 모드 활성화",

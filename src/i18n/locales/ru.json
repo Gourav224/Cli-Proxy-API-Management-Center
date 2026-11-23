@@ -243,7 +243,9 @@
     "health_reason_cooldown": "На паузе",
     "health_reason_model_cooldown": "Пауза модели",
     "health_reason_failures": "{{percent}}% недавних запросов завершились ошибкой",
-    "health_reason_low_traffic_failures": "Недавние запросы завершились ошибкой"
+    "health_reason_low_traffic_failures": "Недавние запросы завершились ошибкой",
+    "health_reason_quota_exhausted": "Квота исчерпана",
+    "health_reason_quota_low": "Мало квоты (осталось {{percent}}%)"
   },
   "basic_settings": {
     "debug_enable": "Включить режим отладки",

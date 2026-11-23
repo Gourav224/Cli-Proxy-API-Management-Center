@@ -15,6 +15,8 @@ export type HealthReason =
   | 'unavailable'
   | 'cooldown'
   | 'model_cooldown'
+  | 'quota_exhausted'
+  | 'quota_low'
   | 'failures'
   | 'low_traffic_failures';
 
@@ -26,12 +28,17 @@ export interface AccountHealth {
   reasons: HealthReason[];
   /** Failure share of the recent window, or null when there is too little traffic. */
   failureRate: number | null;
+  /** Lowest remaining quota percentage, when this account's quota has been read. */
+  quotaRemaining: number | null;
 }
 
 /** Below this many requests the recent window is too thin to judge by rate. */
 const MIN_REQUESTS_FOR_RATE = 5;
 const HEALTHY_FROM = 85;
 const DEGRADED_FROM = 60;
+/** Same thresholds the quota summary uses for "exhausted" and "low". */
+const QUOTA_EXHAUSTED_AT = 2;
+const QUOTA_LOW_BELOW = 20;
 
 export const levelForScore = (score: number): HealthLevel =>
   score >= HEALTHY_FROM ? 'healthy' : score >= DEGRADED_FROM ? 'degraded' : 'critical';
@@ -49,14 +56,25 @@ const recentTotals = (file: AuthFileItem) => {
   return { success, failed, total: success + failed };
 };
 
-export function computeAccountHealth(file: AuthFileItem, nowMs: number): AccountHealth {
+export function computeAccountHealth(
+  file: AuthFileItem,
+  nowMs: number,
+  quotaRemaining: number | null = null
+): AccountHealth {
   const status = typeof file.status === 'string' ? file.status.trim().toLowerCase() : '';
   if (file.disabled === true || status === 'disabled') {
-    return { file, score: null, level: 'off', reasons: [], failureRate: null };
+    return { file, score: null, level: 'off', reasons: [], failureRate: null, quotaRemaining };
   }
 
   if (isReloginRequired(file)) {
-    return { file, score: 0, level: 'critical', reasons: ['relogin'], failureRate: null };
+    return {
+      file,
+      score: 0,
+      level: 'critical',
+      reasons: ['relogin'],
+      failureRate: null,
+      quotaRemaining,
+    };
   }
 
   const reasons: HealthReason[] = [];
@@ -80,6 +98,17 @@ export function computeAccountHealth(file: AuthFileItem, nowMs: number): Account
     score -= Math.min(15, cooldowns.modelCount * 5);
   }
 
+  if (quotaRemaining !== null && Number.isFinite(quotaRemaining)) {
+    if (quotaRemaining <= QUOTA_EXHAUSTED_AT) {
+      // Nothing left to serve with until the next reset.
+      reasons.push('quota_exhausted');
+      cap = Math.min(cap, 40);
+    } else if (quotaRemaining < QUOTA_LOW_BELOW) {
+      reasons.push('quota_low');
+      score -= 10;
+    }
+  }
+
   const { failed, total } = recentTotals(file);
   let failureRate: number | null = null;
   if (total >= MIN_REQUESTS_FOR_RATE) {
@@ -93,7 +122,7 @@ export function computeAccountHealth(file: AuthFileItem, nowMs: number): Account
   }
 
   score = Math.max(0, Math.min(score, cap));
-  return { file, score, level: levelForScore(score), reasons, failureRate };
+  return { file, score, level: levelForScore(score), reasons, failureRate, quotaRemaining };
 }
 
 export interface FleetHealth {
@@ -104,8 +133,14 @@ export interface FleetHealth {
 }
 
 /** Worst accounts first, so the list leads with what needs attention. */
-export function summarizeFleetHealth(files: AuthFileItem[], nowMs: number): FleetHealth {
-  const accounts = files.map((file) => computeAccountHealth(file, nowMs));
+export function summarizeFleetHealth(
+  files: AuthFileItem[],
+  nowMs: number,
+  quotaRemainingByName: ReadonlyMap<string, number | null> = new Map()
+): FleetHealth {
+  const accounts = files.map((file) =>
+    computeAccountHealth(file, nowMs, quotaRemainingByName.get(file.name) ?? null)
+  );
   const counts: Record<HealthLevel, number> = { healthy: 0, degraded: 0, critical: 0, off: 0 };
   let sum = 0;
   let scored = 0;

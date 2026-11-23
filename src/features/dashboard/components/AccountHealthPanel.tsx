@@ -26,11 +26,20 @@ const TONE_FOR_LEVEL: Record<HealthLevel, MeterTone> = {
 interface AccountHealthPanelProps {
   files: AuthFileItem[] | null;
   nowMs: number;
+  /** Lowest remaining quota percentage per auth file name, for accounts whose quota is loaded. */
+  quotaRemainingByName?: ReadonlyMap<string, number | null>;
 }
 
-export function AccountHealthPanel({ files, nowMs }: AccountHealthPanelProps) {
+export function AccountHealthPanel({
+  files,
+  nowMs,
+  quotaRemainingByName,
+}: AccountHealthPanelProps) {
   const { t } = useTranslation();
-  const fleet = useMemo(() => (files ? summarizeFleetHealth(files, nowMs) : null), [files, nowMs]);
+  const fleet = useMemo(
+    () => (files ? summarizeFleetHealth(files, nowMs, quotaRemainingByName) : null),
+    [files, nowMs, quotaRemainingByName]
+  );
 
   if (!fleet || fleet.accounts.length === 0) return null;
 
@@ -44,7 +53,11 @@ export function AccountHealthPanel({ files, nowMs }: AccountHealthPanelProps) {
       ? t('dashboard.health_reason_failures', {
           percent: Math.round((account.failureRate ?? 0) * 100),
         })
-      : t(`dashboard.health_reason_${reason}`);
+      : reason === 'quota_low'
+        ? t('dashboard.health_reason_quota_low', {
+            percent: Math.round(account.quotaRemaining ?? 0),
+          })
+        : t(`dashboard.health_reason_${reason}`);
 
   return (
     <section className={styles.panel} aria-label={t('dashboard.health_title')}>

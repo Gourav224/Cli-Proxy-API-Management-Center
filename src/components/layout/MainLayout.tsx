@@ -48,6 +48,7 @@ import {
 import { AUTH_FILES_CHANGED_EVENT } from '@/features/authFiles/authFilesEvents';
 import {
   collectPluginResourceEntries,
+  localizePluginResourceEntry,
   PLUGIN_RESOURCES_REFRESH_EVENT,
   resolvePluginAssetURL,
   type PluginResourceEntry,
@@ -321,7 +322,7 @@ const THEME_CARDS: Array<{
 ];
 
 export function MainLayout() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { showNotification } = useNotificationStore();
   const location = useLocation();
 
@@ -361,7 +362,13 @@ export function MainLayout() {
     connectionStatus === 'connected' && supportsPlugin && pluginData?.apiBase === apiBase
       ? pluginData
       : null;
-  const pluginResources = currentPluginData?.resources ?? [];
+  const pluginResources = useMemo(
+    () =>
+      (currentPluginData?.resources ?? []).map((entry) =>
+        localizePluginResourceEntry(entry, i18n.language)
+      ),
+    [currentPluginData?.resources, i18n.language]
+  );
   const pluginRequestRef = useRef(0);
   const [expandedPluginResourceIDs, setExpandedPluginResourceIDs] = useState<Set<string>>(
     () => new Set()

@@ -244,7 +244,9 @@
     "health_reason_cooldown": "Đang nghỉ",
     "health_reason_model_cooldown": "Mô hình đang nghỉ",
     "health_reason_failures": "{{percent}}% yêu cầu gần đây thất bại",
-    "health_reason_low_traffic_failures": "Các yêu cầu gần đây thất bại"
+    "health_reason_low_traffic_failures": "Các yêu cầu gần đây thất bại",
+    "health_reason_quota_exhausted": "Đã hết hạn mức",
+    "health_reason_quota_low": "Hạn mức thấp (còn {{percent}}%)"
   },
   "basic_settings": {
     "debug_enable": "Bật chế độ Debug",
