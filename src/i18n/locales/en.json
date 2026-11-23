@@ -221,7 +221,15 @@
     "idle_traffic_note": "No requests recorded in the current telemetry window — proxy is online and ready.",
     "relogin_title": "Re-login needed: {{count}}",
     "relogin_body": "Their refresh token was rejected. Requests skip these accounts until you sign in again.",
-    "relogin_action": "Review accounts"
+    "relogin_action": "Review accounts",
+    "cta_auth_files_desc": "Upload, refresh, and disable OAuth credentials.",
+    "cta_config_desc": "Tune routing, retries, logging, and access.",
+    "cta_providers_desc": "Add API keys, set priorities, and test brands.",
+    "fleet_description": "Volume and success rate per provider over the same window.",
+    "stat_credentials_empty": "No credential files found",
+    "stat_credentials_hint": "{{active}} active · {{disabled}} not serving",
+    "stat_success_hint": "Across {{total}} requests in the window",
+    "traffic_description": "Success and failure counts per 10-minute bucket across the last {{window}}. Hover a column for its exact split."
   },
   "basic_settings": {
     "debug_enable": "Enable Debug Mode",
@@ -1739,7 +1747,8 @@
     "stat_attention": "Rate-limited / low",
     "stat_cadence": "Quota sync",
     "cadence_active": "Every 60s",
-    "cadence_paused": "Manual only"
+    "cadence_paused": "Manual only",
+    "description": "Monitor OAuth quota status for Antigravity, Codex, Claude, Kimi, and xAI credentials."
   },
   "routing": {
     "title": "Routing",

@@ -221,7 +221,15 @@
     "idle_traffic_note": "Chưa có yêu cầu trong khung thời gian hiện tại — proxy đang trực tuyến và sẵn sàng.",
     "relogin_title": "Cần đăng nhập lại: {{count}}",
     "relogin_body": "Refresh token đã bị từ chối. Yêu cầu sẽ bỏ qua các tài khoản này cho đến khi bạn đăng nhập lại.",
-    "relogin_action": "Xem tài khoản"
+    "relogin_action": "Xem tài khoản",
+    "cta_auth_files_desc": "Tải lên, làm mới và vô hiệu hóa credential OAuth.",
+    "cta_config_desc": "Tinh chỉnh định tuyến, thử lại, ghi log và truy cập.",
+    "cta_providers_desc": "Thêm API key, đặt ưu tiên và kiểm thử các thương hiệu.",
+    "fleet_description": "Lưu lượng và tỷ lệ thành công của từng provider trong cùng cửa sổ.",
+    "stat_credentials_empty": "Chưa tìm thấy file credential nào",
+    "stat_credentials_hint": "{{active}} đang hoạt động · {{disabled}} không phục vụ",
+    "stat_success_hint": "Trên {{total}} yêu cầu trong cửa sổ",
+    "traffic_description": "Số lần thành công và thất bại mỗi bucket 10 phút trong {{window}} vừa qua. Di chuột vào cột để xem phân tách chính xác."
   },
   "basic_settings": {
     "debug_enable": "Bật chế độ Debug",
@@ -1684,7 +1692,8 @@
     "stat_attention": "Giới hạn / thấp",
     "stat_cadence": "Đồng bộ hạn mức",
     "cadence_active": "Mỗi 60 giây",
-    "cadence_paused": "Thủ công"
+    "cadence_paused": "Thủ công",
+    "description": "Theo dõi trạng thái quota OAuth của credential Antigravity, Codex, Claude, Kimi và xAI."
   },
   "routing": {
     "title": "Định tuyến",

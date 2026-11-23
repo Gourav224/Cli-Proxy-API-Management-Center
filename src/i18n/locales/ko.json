@@ -221,7 +221,15 @@
     "idle_traffic_note": "현재 집계 구간에 기록된 요청이 없습니다 — 프록시가 온라인 상태입니다.",
     "relogin_title": "재로그인 필요: {{count}}",
     "relogin_body": "리프레시 토큰이 거부되었습니다. 다시 로그인할 때까지 요청은 이 계정을 건너뜁니다.",
-    "relogin_action": "계정 보기"
+    "relogin_action": "계정 보기",
+    "cta_auth_files_desc": "OAuth 자격 증명을 업로드, 새로 고침 및 비활성화합니다.",
+    "cta_config_desc": "라우팅, 재시도, 로깅 및 접근 권한을 조정합니다.",
+    "cta_providers_desc": "API 키를 추가하고 우선순위를 설정하며 브랜드를 테스트합니다.",
+    "fleet_description": "동일한 윈도우 내 각 공급자의 요청량 및 성공률입니다.",
+    "stat_credentials_empty": "자격 증명 파일을 찾을 수 없습니다",
+    "stat_credentials_hint": "활성 {{active}}개 · 비제공 {{disabled}}개",
+    "stat_success_hint": "윈도우 내 총 {{total}}건의 요청",
+    "traffic_description": "최근 {{window}} 동안 10분 단위 버킷별 성공 및 실패 횟수입니다. 열에 마우스를 올리면 정확한 구성을 확인할 수 있습니다."
   },
   "basic_settings": {
     "debug_enable": "디버그 모드 활성화",
@@ -1739,7 +1747,8 @@
     "stat_attention": "제한됨 / 부족",
     "stat_cadence": "할당량 동기화",
     "cadence_active": "60초마다",
-    "cadence_paused": "수동 전용"
+    "cadence_paused": "수동 전용",
+    "description": "Antigravity, Codex, Claude, Kimi 및 xAI 자격 증명의 OAuth 할당량 상태를 모니터링합니다."
   },
   "routing": {
     "title": "라우팅",

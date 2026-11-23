@@ -221,7 +221,15 @@
     "idle_traffic_note": "目前統計視窗內暫無請求流量 —— 代理服務在線就緒。",
     "relogin_title": "需要重新登入：{{count}}",
     "relogin_body": "其更新權杖已被拒絕。重新登入前，請求會略過這些帳號。",
-    "relogin_action": "檢視帳號"
+    "relogin_action": "檢視帳號",
+    "cta_auth_files_desc": "上傳、更新與停用 OAuth 憑證。",
+    "cta_config_desc": "調整路由、重試、日誌與存取控制。",
+    "cta_providers_desc": "新增 API Key、設定優先順序並測試品牌。",
+    "fleet_description": "同一視窗內各供應商的請求量與成功率。",
+    "stat_credentials_empty": "找不到憑證檔案",
+    "stat_credentials_hint": "{{active}} 個可用 · {{disabled}} 個未參與排程",
+    "stat_success_hint": "視窗內共 {{total}} 次請求",
+    "traffic_description": "最近 {{window}} 的成功與失敗次數，每 10 分鐘一桶。將游標移到任一長條可看精確組成。"
   },
   "basic_settings": {
     "debug_enable": "啟用除錯模式",
@@ -1760,7 +1768,8 @@
     "stat_attention": "限流 / 低餘量",
     "stat_cadence": "額度同步",
     "cadence_active": "每 60 秒",
-    "cadence_paused": "僅手動"
+    "cadence_paused": "僅手動",
+    "description": "集中查看 OAuth 配額與剩餘情況"
   },
   "routing": {
     "title": "路由編排",

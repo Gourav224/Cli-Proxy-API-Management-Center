@@ -221,7 +221,15 @@
     "idle_traffic_note": "Geçerli pencerede kayıtlı istek yok — vekil sunucu çevrimiçi ve hazır.",
     "relogin_title": "Yeniden giriş gerekli: {{count}}",
     "relogin_body": "Yenileme belirteci reddedildi. Yeniden giriş yapana kadar istekler bu hesapları atlar.",
-    "relogin_action": "Hesapları incele"
+    "relogin_action": "Hesapları incele",
+    "cta_auth_files_desc": "OAuth Kimlik Bilgilerini Yükle, Yenile ve Devre Dışı Bırak.",
+    "cta_config_desc": "Yönlendirme, Yeniden Deneme, Günlük ve Erişimi Ayarla.",
+    "cta_providers_desc": "API Anahtarları Ekle, Öncelikleri Ayarla ve Markaları Sına.",
+    "fleet_description": "Aynı Pencerede Sağlayıcı Başına Hacim ve Başarı Oranı.",
+    "stat_credentials_empty": "Kimlik Dosyası Bulunamadı",
+    "stat_credentials_hint": "{{active}} Aktif · {{disabled}} Hizmet Vermiyor",
+    "stat_success_hint": "Penceredeki {{total}} İstek Genelinde",
+    "traffic_description": "Son {{window}} İçinde Her 10 Dakikalık Dilimin Başarı ve Başarısızlık Sayıları. Ayrımı Görmek için Sütunun Üzerine Gel."
   },
   "basic_settings": {
     "debug_enable": "Hata Ayıklama Modunu Etkinleştir",
@@ -1739,7 +1747,8 @@
     "pool_chart_label": "Zaman içinde {{provider}} toplam kotası",
     "pool_now": "Şimdi",
     "pool_legend_recorded": "Kaydedilen",
-    "pool_legend_projected": "Tahmin edilen"
+    "pool_legend_projected": "Tahmin edilen",
+    "description": "Antigravity, Codex, Claude, Kimi ve xAI Kimlik Bilgileri için OAuth Kota Durumunu İzle."
   },
   "routing": {
     "title": "Yönlendirme",
