@@ -1,4 +1,5 @@
 import { useState, type CSSProperties } from 'react';
+import { Link } from 'react-router-dom';
 import { getAuthFileRefreshKey } from '@/features/authFiles/manualRefresh';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
@@ -21,6 +22,7 @@ import {
   formatModified,
   getAuthFileStatusMessage,
   hasAuthFileStatusWarning,
+  isReloginRequired,
   getTypeColor,
   getTypeLabel,
   isRuntimeOnlyAuthFile,
@@ -109,6 +111,7 @@ export function AuthFileCard(props: AuthFileCardProps) {
 
   const rawStatusMessage = getAuthFileStatusMessage(file);
   const hasStatusWarning = hasAuthFileStatusWarning(file);
+  const reloginRequired = isReloginRequired(file);
 
   const priorityValue = Number.isSafeInteger(file.priority) ? file.priority : undefined;
   const weightValue = Number.isSafeInteger(file.weight) ? file.weight : undefined;
@@ -182,7 +185,17 @@ export function AuthFileCard(props: AuthFileCardProps) {
         </p>
       )}
 
-      {rawStatusMessage && hasStatusWarning && (
+      {reloginRequired && (
+        <div className={styles.relogin} role="alert">
+          <IconInfo className={styles.warningIcon} size={14} />
+          <span>{t('auth_files.relogin_required')}</span>
+          <Link to="/oauth" className={styles.reloginAction}>
+            {t('auth_files.relogin_action')}
+          </Link>
+        </div>
+      )}
+
+      {rawStatusMessage && hasStatusWarning && !reloginRequired && (
         <div className={styles.warning} title={rawStatusMessage}>
           <IconInfo className={styles.warningIcon} size={14} />
           <span>{rawStatusMessage}</span>

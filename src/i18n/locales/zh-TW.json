@@ -229,7 +229,10 @@
     "quota_sampling": "取樣中…",
     "quota_next_reset": "下次重置",
     "quota_open_link": "開啟額度面板",
-    "idle_traffic_note": "目前統計視窗內暫無請求流量 —— 代理服務在線就緒。"
+    "idle_traffic_note": "目前統計視窗內暫無請求流量 —— 代理服務在線就緒。",
+    "relogin_title": "需要重新登入：{{count}}",
+    "relogin_body": "其更新權杖已被拒絕。重新登入前，請求會略過這些帳號。",
+    "relogin_action": "檢視帳號"
   },
   "basic_settings": {
     "debug_enable": "啟用除錯模式",
@@ -461,7 +464,9 @@
     "quota_refresh_single": "重新整理配額",
     "quota_refresh_hint": "僅重新整理該驗證檔案的配額",
     "quota_refresh_success": "已重新整理「{{name}}」的配額",
-    "quota_refresh_failed": "重新整理「{{name}}」的配額失敗：{{message}}"
+    "quota_refresh_failed": "重新整理「{{name}}」的配額失敗：{{message}}",
+    "relogin_required": "登入已過期——請重新登入",
+    "relogin_action": "重新登入"
   },
   "antigravity_subscription": {
     "plan_unknown": "未知",

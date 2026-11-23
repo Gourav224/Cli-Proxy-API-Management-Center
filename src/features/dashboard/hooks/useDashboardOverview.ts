@@ -35,7 +35,7 @@ const apiKeyFromCompositeKey = (compositeKey: string): string => {
   return separatorIndex < 0 ? '' : compositeKey.slice(separatorIndex + 1).trim();
 };
 
-const providerIdOfAuthFile = (file: AuthFileItem): string => {
+export const providerIdOfAuthFile = (file: AuthFileItem): string => {
   const candidate = String(file.type ?? file.provider ?? '')
     .trim()
     .toLowerCase();

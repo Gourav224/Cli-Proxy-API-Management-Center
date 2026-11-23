@@ -229,7 +229,10 @@
     "quota_sampling": "Örnekleniyor…",
     "quota_next_reset": "Sonraki sıfırlama",
     "quota_open_link": "Kota konsolunu aç",
-    "idle_traffic_note": "Geçerli pencerede kayıtlı istek yok — vekil sunucu çevrimiçi ve hazır."
+    "idle_traffic_note": "Geçerli pencerede kayıtlı istek yok — vekil sunucu çevrimiçi ve hazır.",
+    "relogin_title": "Yeniden giriş gerekli: {{count}}",
+    "relogin_body": "Yenileme belirteci reddedildi. Yeniden giriş yapana kadar istekler bu hesapları atlar.",
+    "relogin_action": "Hesapları incele"
   },
   "basic_settings": {
     "debug_enable": "Hata Ayıklama Modunu Etkinleştir",
@@ -463,7 +466,9 @@
     "quota_refresh_single": "Kotayı Yenile",
     "quota_refresh_hint": "Yalnızca Bu Kimlik Bilgisinin Kotasını Yenile",
     "quota_refresh_success": "“{{name}}” için Kota Yenilendi",
-    "quota_refresh_failed": "“{{name}}” için Kota Yenilenemedi: {{message}}"
+    "quota_refresh_failed": "“{{name}}” için Kota Yenilenemedi: {{message}}",
+    "relogin_required": "Oturum süresi doldu — yeniden giriş yapın",
+    "relogin_action": "Yeniden giriş"
   },
   "antigravity_subscription": {
     "plan_unknown": "Bilinmiyor",

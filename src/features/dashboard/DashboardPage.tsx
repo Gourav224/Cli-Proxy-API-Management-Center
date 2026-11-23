@@ -14,13 +14,13 @@ import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { useNow } from '@/hooks/useNow';
 import { formatCompactNumber, formatDateValue, formatPercent } from '@/utils/format';
 import { getQuotaCacheKey } from '@/utils/quota/identity';
-import { getTypeLabel } from '@/features/authFiles/constants';
+import { getTypeLabel, isReloginRequired } from '@/features/authFiles/constants';
 import { classifyQuotaFiles, type QuotaFileEntry } from '@/features/quota/logic';
 import { buildQuotaDisplayNameMap, summarizeQuotaFleet } from '@/features/quota/quotaFleetSummary';
 import { useQuotaAutoRefresh } from '@/features/quota/hooks/useQuotaAutoRefresh';
 import type { QuotaCardState } from '@/features/quota/providers';
 import type { QuotaProviderType } from '@/features/quota/providers/types';
-import { useDashboardOverview } from './hooks/useDashboardOverview';
+import { providerIdOfAuthFile, useDashboardOverview } from './hooks/useDashboardOverview';
 import { Meter } from './components/Meter';
 import { Sparkline } from './components/Sparkline';
 import { ThroughputChart } from './components/ThroughputChart';
@@ -62,6 +62,21 @@ export function DashboardPage() {
   } = useDashboardOverview();
 
   useHeaderRefresh(refresh, connected);
+
+  const reloginFiles = useMemo(
+    () => (authFiles ?? []).filter(isReloginRequired),
+    [authFiles]
+  );
+  const reloginSummary = useMemo(() => {
+    const byType = new Map<string, number>();
+    reloginFiles.forEach((file) => {
+      const label = getTypeLabel(t, providerIdOfAuthFile(file));
+      byType.set(label, (byType.get(label) ?? 0) + 1);
+    });
+    return Array.from(byType.entries())
+      .map(([label, count]) => `${label} ×${count}`)
+      .join(', ');
+  }, [reloginFiles, t]);
 
   /* Live quota store integration so the operator sees pooled quota health at a glance on / */
   const antigravityQuota = useQuotaStore((state) => state.antigravityQuota);
@@ -148,11 +163,11 @@ export function DashboardPage() {
         tone: 'warn' as const,
       };
     }
-    if (quotaFleet.exhausted > 0 || successRateTone === 'critical') {
+    if (quotaFleet.exhausted > 0 || reloginFiles.length > 0 || successRateTone === 'critical') {
       return { label: t('dashboard.hero_verdict_warning'), tone: 'warn' as const };
     }
     return { label: t('dashboard.hero_verdict_good'), tone: 'good' as const };
-  }, [connected, connectionStatus, quotaFleet.exhausted, successRateTone, t]);
+  }, [connected, connectionStatus, quotaFleet.exhausted, reloginFiles.length, successRateTone, t]);
 
   const runtimeRows: Array<{ label: string; value: string; mono?: boolean }> = [
     { label: t('dashboard.runtime_routing'), value: routingStrategy },
@@ -251,6 +266,20 @@ export function DashboardPage() {
           </Link>
         </div>
       </header>
+
+      {reloginFiles.length > 0 ? (
+        <section className={styles.reloginBanner} role="alert">
+          <div className={styles.reloginCopy}>
+            <strong>{t('dashboard.relogin_title', { count: reloginFiles.length })}</strong>
+            <span>
+              {reloginSummary} · {t('dashboard.relogin_body')}
+            </span>
+          </div>
+          <Link to="/auth-files" className={styles.reloginAction}>
+            {t('dashboard.relogin_action')}
+          </Link>
+        </section>
+      ) : null}
 
       {/* 4-up High-Density Operator KPI Strip */}
       <section className={styles.kpiGrid} aria-label={t('dashboard.stats_aria')}>

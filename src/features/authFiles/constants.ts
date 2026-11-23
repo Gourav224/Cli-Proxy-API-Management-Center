@@ -156,6 +156,16 @@ export const isProblemAuthFile = (file: AuthFileItem): boolean => {
   return file.unavailable === true || status === 'error' || hasAuthFileStatusWarning(file);
 };
 
+/** Refresh-token rejections need a fresh browser sign-in; retrying or toggling cannot revive them. */
+const RELOGIN_MESSAGE_PATTERN = /unauthori[sz]ed|invalid_grant|refresh[ _-]?token|authentication[_ ]error|re-?login/i;
+
+export const isReloginRequired = (file: AuthFileItem): boolean => {
+  const status = typeof file.status === 'string' ? file.status.trim().toLowerCase() : '';
+  if (file.disabled === true || status === 'disabled') return false;
+  if (file.unavailable !== true && status !== 'error') return false;
+  return RELOGIN_MESSAGE_PATTERN.test(getAuthFileStatusMessage(file));
+};
+
 export const getTypeLabel = (t: TFunction, type: string): string => {
   const providerKey = normalizeProviderKey(type);
   const key = `auth_files.filter_${providerKey}`;

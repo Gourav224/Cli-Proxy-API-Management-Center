@@ -228,7 +228,10 @@
     "quota_sampling": "Опрос…",
     "quota_next_reset": "След. сброс",
     "quota_open_link": "Открыть квоты",
-    "idle_traffic_note": "В текущем окне запросов нет — прокси подключён и готов к работе."
+    "idle_traffic_note": "В текущем окне запросов нет — прокси подключён и готов к работе.",
+    "relogin_title": "Нужен повторный вход: {{count}}",
+    "relogin_body": "Токен обновления отклонён. Запросы обходят эти аккаунты, пока вы не войдёте снова.",
+    "relogin_action": "Открыть аккаунты"
   },
   "basic_settings": {
     "debug_enable": "Включить режим отладки",
@@ -466,7 +469,9 @@
     "quota_refresh_single": "Обновить квоту",
     "quota_refresh_hint": "Обновить квоту только для этих учётных данных",
     "quota_refresh_success": "Квота для \"{{name}}\" обновлена",
-    "quota_refresh_failed": "Не удалось обновить квоту для \"{{name}}\": {{message}}"
+    "quota_refresh_failed": "Не удалось обновить квоту для \"{{name}}\": {{message}}",
+    "relogin_required": "Вход истёк — войдите снова",
+    "relogin_action": "Войти снова"
   },
   "antigravity_subscription": {
     "plan_unknown": "Неизвестно",

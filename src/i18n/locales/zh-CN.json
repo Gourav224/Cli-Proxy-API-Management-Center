@@ -229,7 +229,10 @@
     "quota_sampling": "采样中…",
     "quota_next_reset": "下次重置",
     "quota_open_link": "打开额度面板",
-    "idle_traffic_note": "当前统计窗口内暂无请求流量 —— 代理服务在线就绪。"
+    "idle_traffic_note": "当前统计窗口内暂无请求流量 —— 代理服务在线就绪。",
+    "relogin_title": "需要重新登录：{{count}}",
+    "relogin_body": "其刷新令牌已被拒绝。重新登录前，请求会跳过这些账号。",
+    "relogin_action": "查看账号"
   },
   "basic_settings": {
     "debug_enable": "启用调试模式",
@@ -461,7 +464,9 @@
     "quota_refresh_single": "刷新额度",
     "quota_refresh_hint": "仅刷新该认证文件的额度",
     "quota_refresh_success": "已刷新 \"{{name}}\" 的额度",
-    "quota_refresh_failed": "刷新 \"{{name}}\" 的额度失败：{{message}}"
+    "quota_refresh_failed": "刷新 \"{{name}}\" 的额度失败：{{message}}",
+    "relogin_required": "登录已过期——请重新登录",
+    "relogin_action": "重新登录"
   },
   "antigravity_subscription": {
     "plan_unknown": "未知",

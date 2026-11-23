@@ -154,6 +154,35 @@
   }
 }
 
+.relogin {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--danger-text);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: 8px;
+  padding: 7px 9px;
+
+  span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.reloginAction {
+  margin-left: auto;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
 .warningIcon {
   flex-shrink: 0;
   margin-top: 2px;

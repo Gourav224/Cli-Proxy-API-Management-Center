@@ -229,7 +229,10 @@
     "quota_sampling": "Sampling…",
     "quota_next_reset": "Next reset",
     "quota_open_link": "Open quota console",
-    "idle_traffic_note": "No requests recorded in the current telemetry window — proxy is online and ready."
+    "idle_traffic_note": "No requests recorded in the current telemetry window — proxy is online and ready.",
+    "relogin_title": "Re-login needed: {{count}}",
+    "relogin_body": "Their refresh token was rejected. Requests skip these accounts until you sign in again.",
+    "relogin_action": "Review accounts"
   },
   "basic_settings": {
     "debug_enable": "Enable Debug Mode",
@@ -463,7 +466,9 @@
     "quota_refresh_single": "Refresh quota",
     "quota_refresh_hint": "Refresh quota only for this credential",
     "quota_refresh_success": "Quota refreshed for \"{{name}}\"",
-    "quota_refresh_failed": "Failed to refresh quota for \"{{name}}\": {{message}}"
+    "quota_refresh_failed": "Failed to refresh quota for \"{{name}}\": {{message}}",
+    "relogin_required": "Login expired — sign in again",
+    "relogin_action": "Re-login"
   },
   "antigravity_subscription": {
     "plan_unknown": "Unknown",
